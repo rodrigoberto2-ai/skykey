@@ -1,5 +1,6 @@
 import ClientGuard from "@/components/auth/ClientGuard";
 import LogoutButton from "@/components/auth/LogoutButton";
+import UserBadge from "@/components/auth/UserBadge";
 import SidebarNav from "@/components/layout/SidebarNav";
 
 export default function DashboardLayout({
@@ -23,9 +24,12 @@ export default function DashboardLayout({
 function Header() {
   return (
     <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="px-4 h-14 flex items-center justify-between">
+      <div className="px-4 h-14 flex items-center justify-between gap-3">
         <span className="font-semibold">Skykey Dashboard</span>
-        <LogoutButton />
+        <div className="flex items-center gap-3">
+          <UserBadge />
+          <LogoutButton />
+        </div>
       </div>
     </header>
   );

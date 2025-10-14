@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabaseClient";
+import { useUserStore } from "@/store/userStore";
 
 export default function ClientGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -11,6 +12,8 @@ export default function ClientGuard({ children }: { children: React.ReactNode })
   useEffect(() => {
     let mounted = true;
     const supabase = createClient();
+    const setUser = useUserStore.getState().setUser;
+    const clear = useUserStore.getState().clear;
 
     async function ensureSession() {
       const { data } = await supabase.auth.getSession();
@@ -19,6 +22,11 @@ export default function ClientGuard({ children }: { children: React.ReactNode })
       if (!hasSession) {
         // If already on login, do nothing; otherwise redirect
         if (pathname !== "/login") router.replace("/login");
+        clear();
+      }
+      if (data.session?.user) {
+        const u = data.session.user;
+        setUser({ id: u.id, email: u.email ?? null, name: (u.user_metadata as any)?.full_name ?? null });
       }
       setChecking(false);
     }
@@ -30,6 +38,11 @@ export default function ClientGuard({ children }: { children: React.ReactNode })
       const hasSession = !!session;
       if (!hasSession && pathname !== "/login") router.replace("/login");
       if (hasSession && pathname === "/login") router.replace("/dashboard");
+      if (!hasSession) clear();
+      if (session?.user) {
+        const u = session.user;
+        setUser({ id: u.id, email: u.email ?? null, name: (u.user_metadata as any)?.full_name ?? null });
+      }
     });
 
     return () => {
@@ -51,4 +64,3 @@ export default function ClientGuard({ children }: { children: React.ReactNode })
 
   return <>{children}</>;
 }
-
