@@ -51,8 +51,8 @@ export default function RegisterPage() {
       if (signUpError) throw signUpError;
       setSuccess("Cadastro realizado! Verifique seu email para confirmar.");
       toast.success("Conta criada", { description: "Confirme pelo link enviado ao seu email." });
-    } catch (err: any) {
-      const message = err?.message ?? "Falha ao registrar.";
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Falha ao registrar.";
       setFormError(message);
       toast.error("Não foi possível registrar", { description: message });
     } finally {

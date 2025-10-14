@@ -38,8 +38,8 @@ export default function LoginPage() {
       setSuccess("Login realizado com sucesso.");
       toast.success("Bem-vindo de volta!", { description: "Autenticação concluída." });
       router.push("/dashboard");
-    } catch (err: any) {
-      const message = err?.message ?? "Falha ao entrar.";
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Falha ao entrar.";
       setFormError(message);
       toast.error("Não foi possível entrar", { description: message });
     } finally {

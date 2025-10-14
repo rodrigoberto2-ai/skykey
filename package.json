@@ -9,11 +9,13 @@
     "lint": "eslint",
     "supabase:init": "supabase init",
     "supabase:start": "supabase start",
-    "db:migration:new": "supabase migration new",
+    "db:migration": "supabase migration up",
     "db:reset": "supabase db reset",
     "db:push": "supabase db push"
   },
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.1.15",
+    "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@supabase/supabase-js": "2.46.1",

@@ -18,8 +18,9 @@ export default function LogoutButton() {
       if (error) throw error;
       toast.success("Sessão encerrada");
       router.replace("/login");
-    } catch (err: any) {
-      toast.error("Não foi possível sair", { description: err?.message ?? "Tente novamente." });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Tente novamente.";
+      toast.error("Não foi possível sair", { description: message });
     } finally {
       setLoading(false);
     }
@@ -32,4 +33,3 @@ export default function LogoutButton() {
     </Button>
   );
 }
-

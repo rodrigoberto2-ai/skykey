@@ -16,6 +16,7 @@ create table if not exists public.propriedades (
   owner_id uuid not null references auth.users (id) on delete cascade,
   nome text not null,
   endereco text,
+  descricao text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -54,6 +55,16 @@ create trigger reservas_set_updated_at
 before update on public.reservas
 for each row execute function public.set_updated_at();
 
+-- imagens por propriedade
+create table if not exists public.propriedade_imagens (
+  id uuid primary key default gen_random_uuid(),
+  propriedade_id uuid not null references public.propriedades (id) on delete cascade,
+  url text not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists propriedade_imagens_prop_idx on public.propriedade_imagens(propriedade_id);
+
 -- ============ RLS / POLICIES ============
 alter table public.propriedades enable row level security;
 
@@ -81,6 +92,58 @@ create policy propriedades_delete_own
 on public.propriedades
 for delete
 using (owner_id = auth.uid());
+
+alter table public.propriedade_imagens enable row level security;
+
+drop policy if exists propriedade_imagens_select_own on public.propriedade_imagens;
+create policy propriedade_imagens_select_own
+on public.propriedade_imagens
+for select
+using (
+  exists (
+    select 1 from public.propriedades p
+    where p.id = propriedade_id and p.owner_id = auth.uid()
+  )
+);
+
+drop policy if exists propriedade_imagens_insert_own on public.propriedade_imagens;
+create policy propriedade_imagens_insert_own
+on public.propriedade_imagens
+for insert
+with check (
+  exists (
+    select 1 from public.propriedades p
+    where p.id = propriedade_id and p.owner_id = auth.uid()
+  )
+);
+
+drop policy if exists propriedade_imagens_update_own on public.propriedade_imagens;
+create policy propriedade_imagens_update_own
+on public.propriedade_imagens
+for update
+using (
+  exists (
+    select 1 from public.propriedades p
+    where p.id = propriedade_id and p.owner_id = auth.uid()
+  )
+)
+with check (
+  exists (
+    select 1 from public.propriedades p
+    where p.id = propriedade_id and p.owner_id = auth.uid()
+  )
+);
+
+drop policy if exists propriedade_imagens_delete_own on public.propriedade_imagens;
+create policy propriedade_imagens_delete_own
+on public.propriedade_imagens
+for delete
+using (
+  exists (
+    select 1 from public.propriedades p
+    where p.id = propriedade_id and p.owner_id = auth.uid()
+  )
+);
 
 alter table public.reservas enable row level security;
 

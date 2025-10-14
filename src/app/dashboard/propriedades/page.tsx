@@ -1,134 +1,101 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import Image from "next/image";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabaseClient";
-import type { Propriedade } from "@/types/propriedade";
+import type { Propriedade, PropriedadeImagem } from "@/types/propriedade";
+import PropriedadeCreateModal from "@/components/propriedades/PropriedadeCreateModal";
+import PropriedadeEditModal from "@/components/propriedades/PropriedadeEditModal";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+type PropriedadeWithImgs = Propriedade & {
+  propriedade_imagens?: PropriedadeImagem[];
+};
 
 export default function PropriedadesPage() {
   const supabase = useMemo(() => createClient(), []);
-  const [items, setItems] = useState<Propriedade[]>([]);
+  const [items, setItems] = useState<PropriedadeWithImgs[]>([]);
   const [loading, setLoading] = useState(true);
-  const [nome, setNome] = useState("");
-  const [endereco, setEndereco] = useState("");
-  const [saving, setSaving] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editNome, setEditNome] = useState("");
-  const [editEndereco, setEditEndereco] = useState("");
+  const [editOpen, setEditOpen] = useState(false);
+  const [selected, setSelected] = useState<PropriedadeWithImgs | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  async function authHeader() {
+  const authHeader = useCallback(async (): Promise<Headers> => {
+    const h = new Headers();
     const { data } = await supabase.auth.getSession();
     const token = data.session?.access_token;
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
+    if (token) h.set("Authorization", `Bearer ${token}`);
+    return h;
+  }, [supabase.auth]);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     try {
       const headers = await authHeader();
       const res = await fetch("/api/propriedades", { headers });
       const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || "Falha ao carregar");
-      setItems(json);
-    } catch (e: any) {
-      toast.error("Erro ao carregar", { description: e.message });
+
+      if (!res.ok)
+        throw new Error(
+          (json as { error?: string })?.error || "Falha ao carregar"
+        );
+
+      setItems(json as PropriedadeWithImgs[]);
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Falha ao carregar";
+      toast.error("Erro ao carregar", { description: message });
     } finally {
       setLoading(false);
     }
-  }
+  }, [authHeader]);
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  async function onCreate(e: React.FormEvent) {
-    e.preventDefault();
-    if (!nome.trim()) return toast.error("Informe um nome");
-    setSaving(true);
-    try {
-      const headers = await authHeader();
-      const res = await fetch("/api/propriedades", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", ...headers },
-        body: JSON.stringify({ nome: nome.trim(), endereco: endereco.trim() || null }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || "Falha ao criar");
-      toast.success("Propriedade criada");
-      setNome("");
-      setEndereco("");
-      await load();
-    } catch (e: any) {
-      toast.error("Erro ao criar", { description: e.message });
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  async function startEdit(item: Propriedade) {
-    setEditingId(item.id);
-    setEditNome(item.nome);
-    setEditEndereco(item.endereco || "");
-  }
-
-  async function saveEdit(id: string) {
-    try {
-      const headers = await authHeader();
-      const res = await fetch("/api/propriedades", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json", ...headers },
-        body: JSON.stringify({ id, nome: editNome.trim(), endereco: editEndereco.trim() || null }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || "Falha ao atualizar");
-      toast.success("Propriedade atualizada");
-      setEditingId(null);
-      await load();
-    } catch (e: any) {
-      toast.error("Erro ao atualizar", { description: e.message });
-    }
-  }
+  }, [load]);
 
   async function onDelete(id: string) {
     try {
+      setBusy(true);
       const headers = await authHeader();
       const res = await fetch(`/api/propriedades?id=${id}`, { method: "DELETE", headers });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
-        throw new Error(json?.error || "Falha ao excluir");
+        throw new Error(
+          (json as { error?: string })?.error || "Falha ao excluir"
+        );
       }
       toast.success("Propriedade excluída");
       await load();
-    } catch (e: any) {
-      toast.error("Erro ao excluir", { description: e.message });
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Falha ao excluir";
+      toast.error("Erro ao excluir", { description: message });
+    } finally {
+      setBusy(false);
     }
   }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-semibold">Propriedades</h1>
-        <p className="text-sm text-muted-foreground">Gerencie suas propriedades</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-semibold">Propriedades</h1>
+          <p className="text-sm text-muted-foreground">
+            Gerencie suas propriedades
+          </p>
+        </div>
+        <PropriedadeCreateModal onCreated={load} />
       </div>
-
-      <form onSubmit={onCreate} className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
-        <div className="grid gap-2">
-          <Label htmlFor="nome">Nome</Label>
-          <Input id="nome" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex.: Apartamento Central" />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="endereco">Endereço</Label>
-          <Input id="endereco" value={endereco} onChange={(e) => setEndereco(e.target.value)} placeholder="Rua Exemplo, 123" />
-        </div>
-        <div className="flex items-end">
-          <Button type="submit" disabled={saving}>
-            {saving ? "Salvando..." : "Criar"}
-          </Button>
-        </div>
-      </form>
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
@@ -137,44 +104,87 @@ export default function PropriedadesPage() {
               <th className="py-2 pr-3">Nome</th>
               <th className="py-2 pr-3">Endereço</th>
               <th className="py-2 pr-3">Criado em</th>
+              <th className="py-2 pr-3">Imagens</th>
               <th className="py-2 pr-3">Ações</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td className="py-4" colSpan={4}>Carregando...</td></tr>
+              <tr>
+                <td className="py-4" colSpan={5}>
+                  Carregando...
+                </td>
+              </tr>
             ) : items.length === 0 ? (
-              <tr><td className="py-4" colSpan={4}>Nenhuma propriedade encontrada.</td></tr>
+              <tr>
+                <td className="py-4" colSpan={5}>
+                  Nenhuma propriedade encontrada.
+                </td>
+              </tr>
             ) : (
               items.map((it) => (
                 <tr key={it.id} className="border-b last:border-b-0">
+                  <td className="py-2 pr-3">{it.nome}</td>
+                  <td className="py-2 pr-3">{it.endereco || "—"}</td>
                   <td className="py-2 pr-3">
-                    {editingId === it.id ? (
-                      <Input value={editNome} onChange={(e) => setEditNome(e.target.value)} />
-                    ) : (
-                      it.nome
-                    )}
+                    {new Date(it.created_at).toLocaleDateString()}
                   </td>
                   <td className="py-2 pr-3">
-                    {editingId === it.id ? (
-                      <Input value={editEndereco} onChange={(e) => setEditEndereco(e.target.value)} />
-                    ) : (
-                      it.endereco || "—"
-                    )}
+                    <div className="flex gap-1">
+                      {(it.propriedade_imagens || []).slice(0, 3).map((img) => (
+                        <Image
+                          key={img.id}
+                          src={img.url}
+                          alt="thumb"
+                          width={36}
+                          height={36}
+                          className="size-9 rounded object-cover"
+                          unoptimized
+                        />
+                      ))}
+                      {(it.propriedade_imagens?.length || 0) > 3 && (
+                        <span className="text-xs text-muted-foreground self-center">
+                          +{it.propriedade_imagens!.length - 3}
+                        </span>
+                      )}
+                    </div>
                   </td>
-                  <td className="py-2 pr-3">{new Date(it.created_at).toLocaleDateString()}</td>
-                  <td className="py-2 pr-3 flex gap-2">
-                    {editingId === it.id ? (
-                      <>
-                        <Button size="sm" onClick={() => saveEdit(it.id)}>Salvar</Button>
-                        <Button size="sm" variant="ghost" onClick={() => setEditingId(null)}>Cancelar</Button>
-                      </>
-                    ) : (
-                      <>
-                        <Button size="sm" variant="ghost" onClick={() => startEdit(it)}>Editar</Button>
-                        <Button size="sm" variant="destructive" onClick={() => onDelete(it.id)}>Excluir</Button>
-                      </>
-                    )}
+                  <td className="py-2 pr-3">
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setSelected(it);
+                          setEditOpen(true);
+                        }}
+                      >
+                        Editar
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button size="sm" variant="destructive">Excluir</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Excluir propriedade?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Esta ação removerá a propriedade e as imagens associadas. Não é possível desfazer.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel asChild>
+                              <Button variant="ghost">Cancelar</Button>
+                            </AlertDialogCancel>
+                            <AlertDialogAction asChild>
+                              <Button variant="destructive" onClick={() => onDelete(it.id)}>
+                                Confirmar exclusão
+                              </Button>
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
                   </td>
                 </tr>
               ))
@@ -182,7 +192,23 @@ export default function PropriedadesPage() {
           </tbody>
         </table>
       </div>
+
+      <PropriedadeEditModal
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        item={selected}
+        onSaved={load}
+      />
+      {busy && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-black/30 backdrop-blur-sm">
+          <div className="flex items-center gap-2 rounded-md bg-background/90 px-3 py-2 text-sm shadow">
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-foreground" />
+            Processando...
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 
