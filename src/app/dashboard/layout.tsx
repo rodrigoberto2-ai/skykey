@@ -11,7 +11,7 @@ export default function DashboardLayout({
       <div className="min-h-[100svh] grid grid-rows-[auto_1fr]">
         <Header />
         <div
-          className="grid max-lg:grid-cols-1"
+          className="grid grid-cols-[240px_1fr] max-lg:grid-cols-1"
           style={{ gridTemplateColumns: "240px 1fr", transition: "grid-template-columns 200ms ease" }}
           id="dashboard-grid"
         >
