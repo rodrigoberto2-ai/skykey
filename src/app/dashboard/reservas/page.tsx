@@ -20,14 +20,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useDelete, useGet } from "@/hooks/useFetch";
 
 export default function ReservasPage() {
   const supabase = useMemo(() => createClient(), []);
-  const [items, setItems] = useState<ReservaWithPropriedade[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [propsList, setPropsList] = useState<Propriedade[]>([]);
   const [status, setStatus] = useState<"" | ReservaStatus>("");
   const [propFilter, setPropFilter] = useState<string>("");
+  const { data: propsList = [] } = useGet<Propriedade[]>(["propriedades"], "/api/propriedades");
+  const { data: items = [], isLoading: loading, refetch } = useGet<ReservaWithPropriedade[]>(
+    ["reservas", status, propFilter],
+    `/api/reservas?${new URLSearchParams({ ...(status ? { status } : {}), ...(propFilter ? { propriedade_id: propFilter } : {}) }).toString()}`
+  );
+  const del = useDelete(["reservas"]);
   const [editOpen, setEditOpen] = useState(false);
   const [selected, setSelected] = useState<ReservaWithPropriedade | null>(null);
   const [busy, setBusy] = useState(false);
@@ -40,24 +44,7 @@ export default function ReservasPage() {
     return h;
   }, [supabase.auth]);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const headers = await authHeader();
-      const qs = new URLSearchParams();
-      if (status) qs.set("status", status);
-      if (propFilter) qs.set("propriedade_id", propFilter);
-      const res = await fetch(`/api/reservas?${qs.toString()}`, { headers });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || "Falha ao carregar");
-      setItems(json);
-    } catch (e) {
-      const message = e instanceof Error ? e.message : "Falha ao carregar";
-      toast.error("Erro ao carregar", { description: message });
-    } finally {
-      setLoading(false);
-    }
-  }, [authHeader, status, propFilter]);
+  const load = useCallback(async () => { await refetch(); }, [refetch]);
 
   useEffect(() => {
     void (async () => {
@@ -150,24 +137,19 @@ export default function ReservasPage() {
                               <Button variant="ghost">Cancelar</Button>
                             </AlertDialogCancel>
                             <AlertDialogAction asChild>
-                              <Button variant="destructive" onClick={async () => {
-                                try {
-                                  setBusy(true);
-                                  const headers = await authHeader();
-                                  const res = await fetch(`/api/reservas?id=${r.id}`, { method: 'DELETE', headers });
-                                  if (!res.ok) {
-                                    const j = await res.json().catch(() => ({}));
-                                    throw new Error((j as { error?: string })?.error || 'Falha ao excluir');
-                                  }
-                                  toast.success('Reserva excluída');
-                                  await load();
-                                } catch (err) {
-                                  const message = err instanceof Error ? err.message : 'Falha ao excluir';
-                                  toast.error('Erro ao excluir', { description: message });
-                                } finally {
-                                  setBusy(false);
-                                }
-                              }}>Confirmar exclusão</Button>
+                      <Button variant="destructive" onClick={async () => {
+                        try {
+                          setBusy(true);
+                          await del.mutateAsync({ url: `/api/reservas?id=${r.id}` });
+                          toast.success('Reserva excluída');
+                          await load();
+                        } catch (err) {
+                          const message = err instanceof Error ? err.message : 'Falha ao excluir';
+                          toast.error('Erro ao excluir', { description: message });
+                        } finally {
+                          setBusy(false);
+                        }
+                      }}>Confirmar exclusão</Button>
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -192,3 +174,4 @@ export default function ReservasPage() {
     </div>
   );
 }
+

@@ -25,11 +25,11 @@ type PropriedadeWithImgs = Propriedade & {
 
 export default function PropriedadesPage() {
   const supabase = useMemo(() => createClient(), []);
-  const [items, setItems] = useState<PropriedadeWithImgs[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: items = [], isLoading: loading, refetch } = useGet<PropriedadeWithImgs[]>(["propriedades"], "/api/propriedades");
   const [editOpen, setEditOpen] = useState(false);
   const [selected, setSelected] = useState<PropriedadeWithImgs | null>(null);
   const [busy, setBusy] = useState(false);
+  const del = useDelete(["propriedades"]);
 
   const authHeader = useCallback(async (): Promise<Headers> => {
     const h = new Headers();
@@ -40,41 +40,13 @@ export default function PropriedadesPage() {
   }, [supabase.auth]);
 
   const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const headers = await authHeader();
-      const res = await fetch("/api/propriedades", { headers });
-      const json = await res.json();
-
-      if (!res.ok)
-        throw new Error(
-          (json as { error?: string })?.error || "Falha ao carregar"
-        );
-
-      setItems(json as PropriedadeWithImgs[]);
-    } catch (e: unknown) {
-      const message = e instanceof Error ? e.message : "Falha ao carregar";
-      toast.error("Erro ao carregar", { description: message });
-    } finally {
-      setLoading(false);
-    }
-  }, [authHeader]);
-
-  useEffect(() => {
-    load();
-  }, [load]);
+    await refetch();
+  }, [refetch]);
 
   async function onDelete(id: string) {
     try {
       setBusy(true);
-      const headers = await authHeader();
-      const res = await fetch(`/api/propriedades?id=${id}`, { method: "DELETE", headers });
-      if (!res.ok) {
-        const json = await res.json().catch(() => ({}));
-        throw new Error(
-          (json as { error?: string })?.error || "Falha ao excluir"
-        );
-      }
+      await del.mutateAsync({ url: `/api/propriedades?id=${id}` });
       toast.success("Propriedade excluída");
       await load();
     } catch (e: unknown) {
@@ -212,3 +184,4 @@ export default function PropriedadesPage() {
 }
 
 
+import { useDelete, useGet } from "@/hooks/useFetch";
