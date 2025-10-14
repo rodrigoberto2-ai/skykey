@@ -53,6 +53,7 @@ export default function PropriedadeEditModal({ open, onOpenChange, item, onSaved
     setSaving(true);
     try {
       const headers = await authHeader();
+      headers.set("Content-Type", "application/json");
 
       // upload novos arquivos
       let uploadedUrls: string[] = [];
@@ -66,7 +67,7 @@ export default function PropriedadeEditModal({ open, onOpenChange, item, onSaved
 
       const res = await fetch("/api/propriedades", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json", ...headers },
+        headers,
         body: JSON.stringify({ id: item.id, nome: nome.trim(), endereco: endereco.trim() || null, descricao: descricao.trim() || null, images: allUrls }),
       });
       const json = await res.json().catch(() => ({}));

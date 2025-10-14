@@ -37,9 +37,10 @@ export default function PropriedadeCreateModal({ onCreated }: Props) {
     setSaving(true);
     try {
       const headers = await authHeader();
+      headers.set("Content-Type", "application/json");
       const res = await fetch("/api/propriedades", {
         method: "POST",
-        headers: { "Content-Type": "application/json", ...headers },
+        headers,
         body: JSON.stringify({ nome: nome.trim(), endereco: endereco.trim() || null, descricao: descricao.trim() || null }),
       });
       const created = await res.json();
@@ -53,7 +54,7 @@ export default function PropriedadeCreateModal({ onCreated }: Props) {
         if (urls.length > 0) {
           const resp = await fetch("/api/propriedades", {
             method: "PATCH",
-            headers: { "Content-Type": "application/json", ...headers },
+            headers,
             body: JSON.stringify({ id: created.id, images: urls }),
           });
           if (!resp.ok) {
