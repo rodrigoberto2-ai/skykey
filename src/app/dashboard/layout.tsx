@@ -10,7 +10,11 @@ export default function DashboardLayout({
     <ClientGuard>
       <div className="min-h-[100svh] grid grid-rows-[auto_1fr]">
         <Header />
-        <div className="grid grid-cols-[240px_1fr] max-lg:grid-cols-1">
+        <div
+          className="grid max-lg:grid-cols-1"
+          style={{ gridTemplateColumns: "240px 1fr", transition: "grid-template-columns 200ms ease" }}
+          id="dashboard-grid"
+        >
           <aside className="border-r max-lg:border-r-0 max-lg:border-b bg-background/80">
             <SidebarNav />
           </aside>
