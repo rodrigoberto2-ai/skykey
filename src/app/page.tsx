@@ -49,54 +49,63 @@ function Topbar() {
 
 function SearchBar() {
   return (
-    <form className="mx-auto max-w-4xl w-full rounded-xl border bg-background/70 p-4 shadow-sm backdrop-blur">
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-        <div className="md:col-span-2">
-          <label
-            htmlFor="where"
-            className="block text-xs text-muted-foreground mb-1"
-          >
+    <form className="mx-auto max-w-4xl w-full border border-white/25 ring-1 ring-white/20 bg-white/20 backdrop-blur-lg p-4 shadow-xl">
+      <div className="grid grid-cols-1 md:grid-cols-5 text-white items-stretch">
+        {/* Coluna 1: Where */}
+        <div className="md:col-span-2 grid grid-rows-[1.25rem,1fr] px-2">
+          <label htmlFor="where" className="text-xs text-white/80 leading-none self-end">
             Where
           </label>
-          <input
-            id="where"
-            placeholder="City, property or region"
-            className="w-full h-10 rounded-md border bg-background px-3 text-sm"
-          />
+          <div className="h-16 flex">
+            <input
+              id="where"
+              placeholder="City, property or region"
+              className="w-full mx-2 my-3 h-10 border border-white/35 bg-white/10 px-4 text-sm text-white placeholder-white/70 focus:outline-none focus:border-white/50"
+            />
+          </div>
         </div>
-        <div>
-          <label
-            htmlFor="checkin"
-            className="block text-xs text-muted-foreground mb-1"
-          >
-            Check-in
+
+        {/* Coluna 2: Select date (range em um único bloco) */}
+        <div className="md:border-l md:border-white/30 md:pl-6 grid grid-rows-[1.25rem,1fr] px-2">
+          <label htmlFor="date-range" className="text-xs text-white/80 leading-none self-end">
+            Select date
           </label>
-          <input
-            id="checkin"
-            type="date"
-            className="w-full h-10 rounded-md border bg-background px-3 text-sm"
-          />
+          <div className="h-16 flex">
+            <input
+              id="date-range"
+              type="text"
+              placeholder="dd/mm — dd/mm"
+              className="w-full h-full bg-transparent border-0 px-4 text-sm text-white placeholder-white/80 focus:outline-none"
+            />
+          </div>
         </div>
-        <div>
-          <label
-            htmlFor="checkout"
-            className="block text-xs text-muted-foreground mb-1"
-          >
-            Check-out
+
+        {/* Coluna 3: Guests */}
+        <div className="md:border-l md:border-white/30 md:pl-6 grid grid-rows-[1.25rem,1fr] px-2">
+          <label htmlFor="guests" className="text-xs text-white/80 leading-none self-end">
+            Guests
           </label>
-          <input
-            id="checkout"
-            type="date"
-            className="w-full h-10 rounded-md border bg-background px-3 text-sm"
-          />
+          <div className="h-16 flex">
+            <input
+              id="guests"
+              type="text"
+              placeholder="2 guests"
+              className="w-full h-full bg-transparent border-0 px-4 text-sm text-white placeholder-white/80 focus:outline-none"
+            />
+          </div>
         </div>
-        <div className="flex items-end">
-          <button
-            type="button"
-            className="w-full h-10 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-          >
-            Search
-          </button>
+
+        {/* Coluna 4/5: Botão ocupando o bloco inteiro */}
+        <div className="grid grid-rows-[1.25rem,1fr] px-2">
+          <span className="sr-only">Submit</span>
+          <div className="h-16">
+            <button
+              type="button"
+              className="w-full h-full bg-[#316ca7] hover:bg-[#1e61a2] text-white transition-colors shadow-lg"
+            >
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </form>
@@ -130,15 +139,34 @@ export default function Home() {
     <div className="min-h-[100svh] flex flex-col">
       <Topbar />
       <main className="flex-1">
+        {/* Hero com imagem de fundo e overlay com gradiente de sua paleta */}
         <section className="relative">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 to-background" />
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24 text-center">
-            <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight">
-              Find your next stay
-            </h1>
-            <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
-              Search thousands of properties and manage your reservations
-              seamlessly.
+          <div className="absolute inset-0 -z-10">
+            <Image
+              src="/hero.jpg"
+              alt="Hero"
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* Overlay 1: gradiente de paleta (mais intenso) */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, #ae99c8 0%, #948dc4 10%, #8a8cbc 20%, #7c84bc 30%, #5c7cb4 40%, #7183b8 50%, #5474b1 60%, #4571ac 70%, #316ca7 85%, #1e61a2 100%)",
+                opacity: 0.82,
+              }}
+            />
+            {/* Overlay 2: leve vinheta superior para reforÃƒÂ§ar contraste no tÃƒÂ­tulo */}
+            <div
+              className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-transparent"
+            />
+          </div>
+          <div className="mx-auto max-w-6xl px-4 py-12 sm:py-20 text-center">
+            <img alt="Skykey" src="/logo-skykey.png" className="mx-auto -mt-3 sm:-mt-5 h-auto w-16 sm:w-24 md:w-28 lg:w-[180px]" />
+            <p className="mt-3 text-white/90 max-w-2xl mx-auto">
+              Find your next stay and feel at home
             </p>
             <div className="mt-8">
               <SearchBar />
@@ -174,8 +202,10 @@ export default function Home() {
         id="contact"
         className="border-t py-6 text-center text-sm text-muted-foreground"
       >
-        © {new Date().getFullYear()} Skykey
+        Ã‚Â© {new Date().getFullYear()} Skykey
       </footer>
     </div>
   );
 }
+
+
