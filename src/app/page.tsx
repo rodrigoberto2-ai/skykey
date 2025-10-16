@@ -2,189 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabaseClient";
-import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import type { DateRange } from "react-day-picker";
-import { DateRangePicker } from "@/components/ui/date-range-picker";
-
-function Topbar() {
-  return (
-    <header className="w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto max-w-6xl px-4 h-14 grid grid-cols-3 items-center">
-        <nav className="hidden sm:flex items-center gap-4 text-sm text-muted-foreground">
-          <Link href="#" className="hover:text-foreground">
-            Home
-          </Link>
-          <Link href="#about" className="hover:text-foreground">
-            About Us
-          </Link>
-          <Link href="#reservations" className="hover:text-foreground">
-            Reservations
-          </Link>
-          <Link href="#contact" className="hover:text-foreground">
-            Contact
-          </Link>
-        </nav>
-        <div className="justify-self-center">
-          <div className="flex items-center gap-2">
-            <Image src="/imgs/logo-skykey.png" alt="" width={40} height={40} />
-          </div>
-        </div>
-        <div className="justify-self-end flex items-center gap-2">
-          <Link
-            href="/login"
-            className="text-sm px-3 py-1.5 rounded-md hover:bg-accent"
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="text-sm px-3 py-1.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90"
-          >
-            Register
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-function SearchBarNew() {
-  const [where, setWhere] = useState("");
-  const [guests, setGuests] = useState(2);
-  const [range, setRange] = useState<DateRange | undefined>({
-    from: undefined,
-    to: undefined,
-  });
-
-  const formatLabel = () => {
-    const { from, to } = range || {};
-    const fmt = (d?: Date) =>
-      d
-        ? d.toLocaleDateString(undefined, { day: "2-digit", month: "2-digit" })
-        : "";
-    if (!from && !to) return "Select dates";
-    if (from && to) return `${fmt(from)} - ${fmt(to)}`;
-    if (from) return `${fmt(from)} - …`;
-    return `… - ${fmt(to)}`;
-  };
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://bookonline.pro/widgets/search/dist/index.js";
-    script.defer = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // Remove o script ao desmontar o componente (opcional)
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  return (
-    <form className="mx-auto max-w-4xl w-full backdrop-blur-xs">
-      <div className="w-full min-h-fit">
-        <div
-          className="avaibook-search-widget"
-          data-accommodations-filter="accommodations"
-          data-show-accommodation-units="1"
-          data-target="_self"
-          data-widget-id="95801"
-          data-widget-token="lGJjMLMKFB3NXWgkIUoxfA=="
-          data-background-color="#FFFFFF1F"
-          data-main-color="#1e61a2"
-          data-border-radius="3px"
-          data-shadow="0 2px 20px rgb(0 0 0 / 16%)"
-          data-padding="1rem"
-          data-language="es"
-        />
-      </div>
-      {/* <div className="grid grid-cols-1 md:grid-cols-5 text-white items-stretch">
-        <div className="md:col-span-2 grid grid-rows-[1.25rem,1fr] px-2">
-          <Label
-            htmlFor="where"
-            className="text-xs text-white/80 leading-none self-end"
-          >
-            Where
-          </Label>
-          <div className="h-16 flex">
-            <Input
-              id="where"
-              placeholder="City, property or region"
-              value={where}
-              onChange={(e) => setWhere(e.target.value)}
-              className="w-full mx-2 my-3 h-10 border border-white/35 bg-white/10 px-4 text-sm text-white placeholder-white/70 focus-visible:ring-0 focus-visible:ring-offset-0"
-            />
-          </div>
-        </div>
-
-        <div className="md:border-l md:border-white/30 md:pl-6 grid grid-rows-[1.25rem,1fr] px-2">
-          <Label className="text-xs text-white/80 leading-none self-end">
-            Select date
-          </Label>
-          <div className="h-16 flex items-center z-50">
-            <script
-              type="text/javascript"
-              src="https://bookonline.pro/widgets/search/dist/index.js"
-              defer
-            ></script>
-            
-          </div>
-        </div>
-
-        <div className="md:border-l md:border-white/30 md:pl-6 grid grid-rows-[1.25rem,1fr] px-2">
-          <Label className="text-xs text-white/80 leading-none self-end">
-            Guests
-          </Label>
-          <div className="h-16 flex items-center gap-3 px-2">
-            <Button
-              type="button"
-              onClick={() => setGuests((g) => Math.max(1, g - 1))}
-              className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/35"
-              variant="ghost"
-              aria-label="Decrease guests"
-            >
-              −
-            </Button>
-            <div className="flex-1 text-center select-none">
-              <span className="text-sm">
-                {guests} guest{guests > 1 ? "s" : ""}
-              </span>
-            </div>
-            <Button
-              type="button"
-              onClick={() => setGuests((g) => g + 1)}
-              className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/35"
-              variant="ghost"
-              aria-label="Increase guests"
-            >
-              +
-            </Button>
-          </div>
-        </div>
-
-        <div className="grid grid-rows-[1.25rem,1fr]">
-          <span className="sr-only">Submit</span>
-          <Button
-            type="submit"
-            className="w-full h-full bg-[#316ca7] hover:bg-[#1e61a2] text-white transition-colors shadow-lg rounded-none md:rounded-none"
-          >
-            Search
-          </Button>
-        </div>
-      </div> */}
-    </form>
-  );
-}
 
 export default function Home() {
   const router = useRouter();
@@ -197,6 +15,18 @@ export default function Home() {
       else setChecked(true);
     });
   }, [router]);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://bookonline.pro/widgets/search/dist/index.js";
+    script.defer = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Remove o script ao desmontar o componente (opcional)
+      document.body.removeChild(script);
+    };
+  }, []);
 
   if (!checked) {
     return (
@@ -211,7 +41,6 @@ export default function Home() {
 
   return (
     <div className="min-h-[100svh] flex flex-col">
-      <Topbar />
       <main className="flex-1">
         {/* Hero com imagem de fundo e overlay com gradiente de sua paleta */}
         <section className="relative">
@@ -236,16 +65,34 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-transparent" />
           </div>
           <div className="mx-auto max-w-6xl px-4 py-12 sm:py-20 text-center">
-            <img
+            <Image
               alt="Skykey"
               src="/logo-skykey.png"
+              width={180}
+              height={100}
               className="mx-auto -mt-3 sm:-mt-5 h-auto w-16 sm:w-24 md:w-28 lg:w-[180px]"
+              priority
             />
             <p className="mt-3 text-white/90 max-w-2xl mx-auto">
               Find your next stay and feel at home
             </p>
             <div className="mt-8">
-              <SearchBarNew />
+              <div className="mx-auto max-w-4xl w-full backdrop-blur-xs min-h-fit">
+                <div
+                  className="avaibook-search-widget"
+                  data-accommodations-filter="accommodations"
+                  data-show-accommodation-units="1"
+                  data-target="_self"
+                  data-widget-id="95801"
+                  data-widget-token="lGJjMLMKFB3NXWgkIUoxfA=="
+                  data-background-color="#FFFFFF29"
+                  data-main-color="#1e61a2"
+                  data-border-radius="3px"
+                  data-shadow="0 2px 20px rgb(0 0 0 / 16%)"
+                  data-padding="1rem"
+                  data-language="es"
+                />
+              </div>
             </div>
           </div>
         </section>
