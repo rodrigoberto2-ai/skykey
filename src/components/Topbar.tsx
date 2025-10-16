@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Topbar() {
   return (
     <header className="w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="max-w-7xl mx-auto px-4 py-2 h-fit items-start flex flex-col gap-4">
+      <div className="max-w-7xl mx-auto px-4 pt-2 h-36 items-start flex flex-col justify-center gap-4">
         <div className="flex justify-between w-full">
           <div className="justify-self-center">
             <div className="flex items-center gap-2">
@@ -31,22 +31,33 @@ export default function Topbar() {
             </Link>
           </div>
         </div>
-        <div className="w-full">
-          <nav className="hidden sm:flex items-center gap-8 text-sm text-muted-foreground uppercase tracking-wider">
-            <Link href="#" className="hover:text-foreground">
-              Home
-            </Link>
-            <Link href="#about" className="hover:text-foreground">
-              About Us
-            </Link>
-            <Link href="#reservations" className="hover:text-foreground">
-              Reservations
-            </Link>
-            <Link href="#contact" className="hover:text-foreground">
-              Contact
-            </Link>
-          </nav>
-        </div>
+
+        <nav className="mt-1 hidden sm:flex items-center gap-8 text-sm text-muted-foreground uppercase tracking-widest h-full pt-2">
+          <Link
+            href="#"
+            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
+          >
+            Home
+          </Link>
+          <Link
+            href="#about"
+            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
+          >
+            About Us
+          </Link>
+          <Link
+            href="#reservations"
+            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
+          >
+            Reservations
+          </Link>
+          <Link
+            href="#contact"
+            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
+          >
+            Contact
+          </Link>
+        </nav>
       </div>
     </header>
   );
