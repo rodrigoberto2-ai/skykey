@@ -89,7 +89,9 @@ export default function Home() {
         </section>
 
         <section id="reservations" className="mx-auto max-w-6xl px-4 py-12">
-          <h3 className="font-accent text-4xl mb-8">The best tours tours</h3>
+          <h3 className="font-accent text-primary text-4xl mb-8">
+            The best tours tours
+          </h3>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
               <div key={i} className="rounded-lg border overflow-hidden">

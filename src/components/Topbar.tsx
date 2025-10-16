@@ -1,5 +1,19 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+
+function NavItem({ href, children }: { href: string; children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const base = "h-full text-[var(--primary)] transition-all font-normal hover:text-primary hover:border-b-4 hover:border-b-primary";
+  const active = isActive ? "border-b-4 border-b-primary text-primary" : "";
+  return (
+    <Link href={href} aria-current={isActive ? "page" : undefined} className={`${base} ${active}`}>
+      {children}
+    </Link>
+  );
+}
 
 export default function Topbar() {
   return (
@@ -33,30 +47,10 @@ export default function Topbar() {
         </div>
 
         <nav className="mt-1 hidden sm:flex items-center gap-8 text-sm text-muted-foreground uppercase tracking-widest h-full pt-2">
-          <Link
-            href="#"
-            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
-          >
-            Home
-          </Link>
-          <Link
-            href="#about"
-            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
-          >
-            About Us
-          </Link>
-          <Link
-            href="#reservations"
-            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
-          >
-            Reservations
-          </Link>
-          <Link
-            href="#contact"
-            className="h-full text-[var(--primary)] transition-all font-normal hover:text-foreground hover:border-b-4 hover:border-b-[var(--primary)]"
-          >
-            Contact
-          </Link>
+          <NavItem href="/">Home</NavItem>
+          <NavItem href="/stays">Stays</NavItem>
+          <NavItem href="/about">About Us</NavItem>
+          <NavItem href="/contact">Contact</NavItem>
         </nav>
       </div>
     </header>
