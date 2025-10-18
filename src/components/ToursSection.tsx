@@ -93,7 +93,7 @@ export default function ToursSection() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 pt-4 pb-16">
-      <h2 className="font-sans text-4xl font-bold text-left mb-12 text-gray-800">
+      <h2 className="font-sans text-4xl font-bold text-left mb-12 text-[var(--primary)]">
         Discover Madrid with Skykey
       </h2>
       <div className="grid grid-cols-2 gap-10">
@@ -104,7 +104,7 @@ export default function ToursSection() {
           >
             <TourCarousel images={tour.images} alt={tour.title} />
             <div className="p-6 space-y-4">
-              <h3 className="text-2xl font-semibold text-gray-900">
+              <h3 className="text-2xl font-semibold text-[var(--primary)]">
                 {tour.title}
               </h3>
               <p className="text-gray-700">{tour.description}</p>
