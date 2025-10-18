@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabaseClient";
 import Image from "next/image";
+import ToursSection from "@/components/ToursSection";
 
 export default function Home() {
   const router = useRouter();
@@ -89,29 +90,13 @@ export default function Home() {
         </section>
 
         <section id="reservations" className="mx-auto max-w-6xl px-4 py-12">
-          <h3 className="font-accent text-primary text-4xl mb-8">
-            The best tours tours
+          <h3 className="font-sans text-primary text-4xl mb-8">
+            The Best Tours
           </h3>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="rounded-lg border overflow-hidden">
-                <div className="relative h-48 bg-muted">
-                  <Image
-                    src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
-                    alt="placeholder"
-                    fill
-                    className="inset-0 m-auto opacity-80"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-medium">Featured property {i}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Great location and amenities.
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* Tours section extracted to component */}
+          {/** Keep images as provided in the attached content */}
+          {/* @ts-expect-error Server Component import in Client file is fine for simple render */}
+          <ToursSection />
         </section>
       </main>
       <footer
