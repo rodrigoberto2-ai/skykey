@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Roboto_Flex, Libre_Caslon_Text } from "next/font/goo
 import "./globals.css";
 import { Toaster } from "sonner";
 import QueryProvider from "@/components/providers/QueryProvider";
-import Topbar from "@/components/Topbar";
+import TopbarGate from "@/components/layout/TopbarGate";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +43,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${robotoFlex.variable} ${libreCaslonText.variable} antialiased`}>
         <QueryProvider>
-          <Topbar />
+          <TopbarGate />
           {children}
         </QueryProvider>
         <Toaster position="top-center" richColors expand closeButton />

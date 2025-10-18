@@ -13,11 +13,10 @@ export default function UserBadge() {
     .toUpperCase();
   return (
     <div className="flex items-center gap-2">
-      <div className="grid place-items-center size-7 rounded-full bg-accent text-accent-foreground text-xs font-medium">
+      <div className="grid place-items-center size-7 rounded-full bg-primary text-primary-foreground text-xs font-medium">
         {initials}
       </div>
       <span className="text-sm text-muted-foreground max-w-[200px] truncate">{label}</span>
     </div>
   );
 }
-

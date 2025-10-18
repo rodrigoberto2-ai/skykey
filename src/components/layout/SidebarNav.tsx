@@ -29,10 +29,10 @@ export default function SidebarNav() {
 
   const items: Item[] = [
     { href: "/dashboard", label: "Overview", icon: Home },
-    { href: "/dashboard/reservas", label: "Reservas", icon: CalendarCheck2 },
-    { href: "/dashboard/propriedades", label: "Propriedades", icon: Building2 },
-    { href: "/dashboard/relatorios", label: "Relatórios", icon: BarChart2 },
-    { href: "/dashboard/config", label: "Configurações", icon: Settings },
+    { href: "/dashboard/reservas", label: "Reservations", icon: CalendarCheck2 },
+    { href: "/dashboard/propriedades", label: "Properties", icon: Building2 },
+    { href: "/dashboard/relatorios", label: "Reports", icon: BarChart2 },
+    { href: "/dashboard/config", label: "Settings", icon: Settings },
   ];
 
   useEffect(() => {
@@ -48,9 +48,9 @@ export default function SidebarNav() {
         <button
           type="button"
           onClick={toggle}
-          className="inline-flex items-center justify-center size-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-          aria-label={collapsed ? "Expandir sidebar" : "Recolher sidebar"}
-          title={collapsed ? "Expandir" : "Recolher"}
+          className="inline-flex items-center justify-center size-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-primary transition-colors"
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={collapsed ? "Expand" : "Collapse"}
         >
           {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
         </button>
@@ -66,8 +66,8 @@ export default function SidebarNav() {
                 className={cn(
                   "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
                   active
-                    ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-primary"
                 )}
                 title={collapsed ? it.label : undefined}
               >
@@ -88,3 +88,4 @@ export default function SidebarNav() {
     </nav>
   );
 }
+

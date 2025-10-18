@@ -21,16 +21,16 @@ export default function DashboardPage() {
       </div>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Reservas (30d)" value={isLoading ? "—" : String(m.reservas30)} sub="Últimos 30 dias" />
+        <StatCard title="Reservations (30d)" value={isLoading ? "—" : String(m.reservas30)} sub="Últimos 30 dias" />
         <StatCard title="Ocupação (7d)" value={isLoading ? "—" : fmtPct(m.ocupacao7d)} sub="Média por propriedade" />
-        <StatCard title="Propriedades" value={isLoading ? "—" : String(m.totalPropriedades)} sub="Ativas na conta" />
-        <StatCard title="Check-ins hoje" value={isLoading ? "—" : String(m.checkinsHoje)} sub="Reservas confirmadas" />
+        <StatCard title="Properties" value={isLoading ? "—" : String(m.totalPropriedades)} sub="Active in the account" />
+        <StatCard title="Check-ins today" value={isLoading ? "—" : String(m.checkinsHoje)} sub="Confirmed reservations" />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Reservas recentes</CardTitle>
+            <CardTitle>Recent reservations</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-40 grid place-items-center text-sm text-muted-foreground">
@@ -66,3 +66,4 @@ function StatCard({ title, value, sub }: { title: string; value: string; sub?: s
     </Card>
   );
 }
+
