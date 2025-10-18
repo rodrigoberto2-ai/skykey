@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabaseClient";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import ToursSection from "@/components/ToursSection";
 export default function Home() {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
+  const heroRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -17,16 +18,54 @@ export default function Home() {
     });
   }, [router]);
 
+  // Avaibook widget loader
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://bookonline.pro/widgets/search/dist/index.js";
     script.defer = true;
     document.body.appendChild(script);
+    return () => document.body.removeChild(script);
+  }, []);
 
-    return () => {
-      // Remove o script ao desmontar o componente (opcional)
-      document.body.removeChild(script);
+  // Reveal-on-scroll animations (no deps)
+  useEffect(() => {
+    const nodes = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-animate]")
+    );
+    if (!("IntersectionObserver" in window)) {
+      nodes.forEach((el) => {
+        el.classList.add("reveal-in");
+        el.classList.remove("reveal-init");
+      });
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const el = e.target as HTMLElement;
+            el.classList.add("reveal-in");
+            el.classList.remove("reveal-init");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    nodes.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  // Subtle parallax for hero background
+  useEffect(() => {
+    const n = heroRef.current;
+    if (!n) return;
+    const onScroll = () => {
+      const y = window.scrollY * 0.05;
+      n.style.transform = `translateY(${Math.min(30, y)}px)`;
     };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   if (!checked) {
@@ -43,55 +82,73 @@ export default function Home() {
   return (
     <div className="min-h-[100svh] flex flex-col">
       <main className="flex-1">
-        {/* Hero com imagem de fundo e overlay com gradiente de sua paleta */}
-        <section className="relative">
-          <div className="absolute inset-0 -z-10">
+        {/* Luxury hero with glass search panel */}
+        <section className="relative min-h-[88svh] isolate">
+          <div
+            ref={heroRef}
+            className="absolute inset-0 -z-10 will-change-transform"
+          >
             <Image
               src="/hero.jpg"
-              alt="Hero"
+              alt="Skykey hero"
               fill
-              className="object-cover"
+              className="object-cover object-bottom"
               priority
             />
-            {/* Overlay 1: gradiente de paleta (mais intenso) */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(90deg, #ae99c8 0%, #948dc4 10%, #8a8cbc 20%, #7c84bc 30%, #5c7cb4 40%, #7183b8 50%, #5474b1 60%, #4571ac 70%, #316ca7 85%, #1e61a2 100%)",
-                opacity: 0.725,
-              }}
-            />
-            {/* Overlay 2: leve vinheta superior para reforÃƒÂ§ar contraste no tÃƒÂ­tulo */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-transparent" />
+            {/* Overlays for contrast and brand tone */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/30 via-transparent to-transparent mix-blend-multiply" />
+            {/* Subtle primary→accent sweep */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/18 via-transparent to-[var(--accent)]/18" />
           </div>
-          <div className="mx-auto max-w-6xl px-4 h-[600px] sm:py-20 text-center gap-8">
-            <h3 className="font-accent mb-8 text-7xl text-white text-center">
-              Feeling at home
-              <br /> anywhere
-            </h3>
-            <div className="mx-auto max-w-4xl mt-24 w-full backdrop-blur-xs min-h-fit shadow-xl">
-              <div
-                className="avaibook-search-widget"
-                data-accommodations-filter="accommodations"
-                data-show-accommodation-units="1"
-                data-target="_self"
-                data-widget-id="95801"
-                data-widget-token="lGJjMLMKFB3NXWgkIUoxfA=="
-                data-background-color="#FFFFFF39"
-                data-main-color="#1e61a2"
-                data-border-radius="3px"
-                data-shadow="0 2px 20px rgb(0 0 0 / 16%)"
-                data-padding="1rem"
-                data-language="es"
-              />
+          <div className="mx-auto max-w-6xl px-4 py-8 sm:py-28 lg:py-16">
+            <div className="flex flex-col justify-center items-center">
+              <div className="text-center">
+                <Image
+                  src="/logo-skykey.png"
+                  alt="Skykey logo"
+                  width={260}
+                  height={260}
+                />
+              </div>
+            </div>
+            {/* Glass widget panel */}
+            <div className="mt-16 sm:mt-16 max-w-4xl mx-auto" data-animate>
+              <div className="rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl p-4 sm:p-5 w-full">
+                <div
+                  className="avaibook-search-widget"
+                  data-accommodations-filter="accommodations"
+                  data-show-accommodation-units="1"
+                  data-target="_self"
+                  data-widget-id="95801"
+                  data-widget-token="lGJjMLMKFB3NXWgkIUoxfA=="
+                  data-background-color="#FFFFFF39"
+                  data-main-color="#1e61a2"
+                  data-border-radius="12px"
+                  data-shadow="0 10px 35px rgb(0 0 0 / 30%)"
+                  data-padding="1rem"
+                  data-language="es"
+                />
+              </div>
+            </div>
+            <div className="w-full reveal-in mt-32 text-center">
+              <h1 className="font-accent text-xl sm:text-xl leading-[1.05] tracking-tight text-[#FFF9] drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)]">
+                Feel at home, anywhere
+              </h1>
             </div>
           </div>
         </section>
 
-        <section id="reservations" className="mx-auto max-w-6xl px-4 py-12">
-          {/* Tours section extracted to component */}
-          {/** Keep images as provided in the attached content */}
+        {/* Tours */}
+        <section id="reservations" className="mx-auto max-w-6xl px-4 py-16">
+          <div className="mb-8 reveal-init" data-animate>
+            <p className="text-[var(--accent)] text-xs tracking-[0.18em] uppercase">
+              Tours
+            </p>
+            <h2 className="mt-1 text-3xl sm:text-4xl font-semibold text-[var(--primary)]">
+              The best ways to discover Madrid
+            </h2>
+          </div>
           <ToursSection />
         </section>
       </main>

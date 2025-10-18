@@ -1,6 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -30,64 +36,108 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="font-sans text-3xl mb-4 text-primary">Contact</h1>
-      <p className="text-muted-foreground max-w-2xl mb-8">
-        Have questions or need support? Send us a message and we’ll get back to you as soon as possible.
-      </p>
-
-      <form onSubmit={onSubmit} className="grid gap-4">
-        <div className="grid gap-2">
-          <label htmlFor="name" className="text-sm font-medium">Name</label>
-          <input id="name" name="name" required className="border rounded-md px-3 py-2" />
+    <div className="min-h-[100svh]">
+      {/* Hero */}
+      <section className="relative isolate">
+        <div className="absolute inset-0 -z-10">
+          <Image src="/hero.jpg" alt="Contact Skykey" fill className="object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/20 via-transparent to-[var(--accent)]/20" />
         </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="email" className="text-sm font-medium">Email</label>
-          <input id="email" name="email" type="email" required className="border rounded-md px-3 py-2" />
+        <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
+          <h1 className="font-accent text-5xl sm:text-6xl text-white tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)]">Contact</h1>
+          <p className="mt-4 max-w-2xl text-white/80 text-lg">
+            We’re here to help—reach out and our team will get back to you shortly.
+          </p>
         </div>
+      </section>
 
-        <div className="grid gap-2">
-          <label htmlFor="phone" className="text-sm font-medium">Phone (optional)</label>
-          <input id="phone" name="phone" className="border rounded-md px-3 py-2" />
+      {/* Content */}
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <div className="grid gap-10 lg:grid-cols-2">
+          {/* Left: Info cards */}
+          <div className="space-y-4">
+            <Card>
+              <CardContent className="p-5 flex items-start gap-3">
+                <Mail className="text-[var(--primary)] mt-1" size={18} />
+                <div>
+                  <p className="text-sm text-muted-foreground">Email</p>
+                  <a href="mailto:hello@skykey.com" className="text-base">hello@skykey.com</a>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-5 flex items-start gap-3">
+                <Phone className="text-[var(--primary)] mt-1" size={18} />
+                <div>
+                  <p className="text-sm text-muted-foreground">Phone</p>
+                  <a href="tel:+000000000" className="text-base">+0 (000) 000-0000</a>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-5 flex items-start gap-3">
+                <MapPin className="text-[var(--primary)] mt-1" size={18} />
+                <div>
+                  <p className="text-sm text-muted-foreground">Office</p>
+                  <p className="text-base">Madrid, Spain</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-5 flex items-start gap-3">
+                <Clock className="text-[var(--primary)] mt-1" size={18} />
+                <div>
+                  <p className="text-sm text-muted-foreground">Hours</p>
+                  <p className="text-base">Mon–Fri, 9:00–18:00 (CET)</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Right: Form */}
+          <div className="rounded-2xl border bg-card/70 backdrop-blur p-6 shadow-xl">
+            <form onSubmit={onSubmit} className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" name="name" required />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" name="email" type="email" required />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="phone">Phone (optional)</Label>
+                <Input id="phone" name="phone" />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="subject">Subject</Label>
+                <Input id="subject" name="subject" required />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="message">Message</Label>
+                <textarea id="message" name="message" required rows={6} className="rounded-md border bg-background px-3 py-2" />
+              </div>
+              <div className="flex items-start gap-2">
+                <input id="consent" name="consent" type="checkbox" required className="mt-1" />
+                <label htmlFor="consent" className="text-sm text-muted-foreground">
+                  I agree to the processing of my data according to the
+                  <a className="underline ml-1" href="/privacy" target="_blank">Privacy Policy</a>.
+                </label>
+              </div>
+              <Button type="submit" size="lg" disabled={status === "sending"} className="px-6">
+                {status === "sending" ? "Sending..." : "Send Message"}
+              </Button>
+              {status === "success" && (
+                <p className="text-green-600 text-sm">Message sent successfully. Thank you for contacting us.</p>
+              )}
+              {status === "error" && (
+                <p className="text-red-600 text-sm">Could not send your message: {error}</p>
+              )}
+            </form>
+          </div>
         </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="subject" className="text-sm font-medium">Subject</label>
-          <input id="subject" name="subject" required className="border rounded-md px-3 py-2" />
-        </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="message" className="text-sm font-medium">Message</label>
-          <textarea id="message" name="message" required rows={6} className="border rounded-md px-3 py-2" />
-        </div>
-
-        <div className="flex items-start gap-2">
-          <input id="consent" name="consent" type="checkbox" required className="mt-1" />
-          <label htmlFor="consent" className="text-sm text-muted-foreground">
-            I agree to the processing of my data according to the <a className="underline" href="/privacy" target="_blank">Privacy Policy</a>.
-          </label>
-        </div>
-
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-white disabled:opacity-60"
-        >
-          {status === "sending" ? "Sending..." : "Send Message"}
-        </button>
-
-        {status === "success" && (
-          <p className="text-green-600 text-sm">Message sent successfully. Thank you for contacting us.</p>
-        )}
-        {status === "error" && (
-          <p className="text-red-600 text-sm">Could not send your message: {error}</p>
-        )}
-      </form>
-
-      <div className="mt-10 text-sm text-muted-foreground">
-        You can also email <a href="mailto:hello@skykey.com" className="underline">hello@skykey.com</a> or call <a href="tel:+000000000" className="underline">+0 (000) 000-0000</a>.
-      </div>
+      </section>
     </div>
   );
 }

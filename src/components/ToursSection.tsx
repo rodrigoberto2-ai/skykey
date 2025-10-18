@@ -93,9 +93,6 @@ export default function ToursSection() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 pt-4 pb-16">
-      <h2 className="font-sans text-4xl font-bold text-left mb-12 text-[var(--primary)]">
-        Discover Madrid with Skykey
-      </h2>
       <div className="grid grid-cols-2 gap-10">
         {tours.map((tour, index) => (
           <article
