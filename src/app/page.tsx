@@ -90,12 +90,8 @@ export default function Home() {
         </section>
 
         <section id="reservations" className="mx-auto max-w-6xl px-4 py-12">
-          <h3 className="font-sans text-primary text-4xl mb-8">
-            The Best Tours
-          </h3>
           {/* Tours section extracted to component */}
           {/** Keep images as provided in the attached content */}
-          {/* @ts-expect-error Server Component import in Client file is fine for simple render */}
           <ToursSection />
         </section>
       </main>

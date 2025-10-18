@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.pexels.com",
       },
+      {
+        protocol: "https",
+        hostname: "patrimonionacional.es",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.shortpixel.ai",
+      },
+      {
+        protocol: "https",
+        hostname: "offloadmedia.feverup.com",
+      },
     ],
   },
 };
