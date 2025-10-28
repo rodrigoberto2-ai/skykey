@@ -40,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} ${robotoFlex.variable} ${libreCaslonText.variable} antialiased`}>
         <QueryProvider>
           <TopbarGate />

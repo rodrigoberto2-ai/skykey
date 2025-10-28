@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabaseClient";
@@ -97,9 +97,9 @@ export default function Home() {
             />
             {/* Overlays for contrast and brand tone */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/30 via-transparent to-transparent mix-blend-multiply" />
-            {/* Subtle primary→accent sweep */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/18 via-transparent to-[var(--accent)]/18" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/12 via-transparent to-transparent" />
+            {/* Subtle primary?accent sweep */}
+            <div className="absolute inset-0 " />
           </div>
           <div className="mx-auto max-w-6xl px-4 py-8 sm:py-28 lg:py-16">
             <div className="flex flex-col justify-center items-center">
@@ -114,7 +114,7 @@ export default function Home() {
             </div>
             {/* Glass widget panel */}
             <div className="mt-16 sm:mt-16 max-w-4xl mx-auto" data-animate>
-              <div className="rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl p-4 sm:p-5 w-full">
+              <div className="card-glass p-4 sm:p-5 w-full">
                 <div
                   className="avaibook-search-widget"
                   data-accommodations-filter="accommodations"
@@ -132,8 +132,8 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full reveal-in mt-32 text-center">
-              <h1 className="font-accent text-xl sm:text-xl leading-[1.05] tracking-tight text-[#FFF9] drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)]">
-                Feel at home, anywhere
+              <h1 className="font-accent text-xl sm:text-xl leading-[1.05] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)]">
+                Feel at home, anywhere � Skykey
               </h1>
             </div>
           </div>

@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 function NavItem({ href, children }: { href: string; children: React.ReactNode }) {
   const pathname = usePathname();
   const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
-  const base = "h-full text-[var(--primary)] transition-all font-normal hover:text-primary hover:border-b-4 hover:border-b-primary";
-  const active = isActive ? "border-b-4 border-b-primary text-primary" : "";
+  const base = "h-full text-white transition-all font-normal hover:opacity-80 hover:border-b-4 hover:border-b-white/20";
+  const active = isActive ? "border-b-4 border-b-white/20 text-white" : "";
   return (
     <Link href={href} aria-current={isActive ? "page" : undefined} className={`${base} ${active}`}>
       {children}
@@ -33,20 +33,20 @@ export default function Topbar() {
           <div className="justify-self-end flex items-center gap-2">
             <Link
               href="/login"
-              className="text-sm px-3 py-1.5 border border-[var(--primary)] w-28 text-center font-bold text-[var(--primary)]"
+              className="text-sm px-3 py-1.5 border border-white/60 w-28 text-center font-bold text-white"
             >
               Sign Up
             </Link>
             <Link
               href="/login"
-              className="text-sm px-3 py-1.5 bg-[var(--primary)] w-28 text-center font-bold text-white"
+              className="text-sm px-3 py-1.5 bg-white/10 w-28 text-center font-bold text-white"
             >
               Sign In
             </Link>
           </div>
         </div>
 
-        <nav className="mt-1 hidden sm:flex items-center gap-8 text-sm text-muted-foreground uppercase tracking-widest h-full pt-2">
+        <nav className="mt-1 hidden sm:flex items-center gap-8 text-sm text-white uppercase tracking-widest h-full pt-2">
           <NavItem href="/">Home</NavItem>
           <NavItem href="/stays">Stays</NavItem>
           <NavItem href="/about">About Us</NavItem>

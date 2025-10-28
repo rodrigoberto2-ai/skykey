@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -46,13 +44,23 @@
 
 :root {
   --radius: 0.625rem;
+  --brand-900: #1e61a2;
+  --brand-800: #316ca7;
+  --brand-700: #4571ac;
+  --brand-650: #5b7cb3;
+  --brand-600: #5474b1;
+  --brand-500: #7182b8;
+  --brand-400: #7c84bc;
+  --brand-purple-400: #938dc4;
+  --brand-purple-300: #ae99c8;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.4856 0.1234 251.54);
+  --primary: #0f2742;
   --primary-foreground: oklch(71.606% 0.07911 248.441);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -82,95 +90,42 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  .dark body { background: #0f2742; }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 { color: #fff; }
+
+  .card-glass {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px -20px rgba(0,0,0,0.45);
   }
-  body {
-    @apply bg-background text-foreground;
+
+  .btn-primary-brand {
+    color:#fff;
+    background: linear-gradient(170deg, var(--brand-700), var(--brand-600));
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px;
+    padding:12px 18px;
+    transition: transform .08s ease, box-shadow .2s ease, background .3s ease;
   }
-  .font-accent {
-    font-family: var(--font-accent);
+  .btn-primary-brand:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px -16px rgba(69,113,172,0.55);
+    background: linear-gradient(170deg, var(--brand-650), var(--brand-500));
   }
 }
 
-
-.ant-select.ant-select-borderless.ant-select-single.ant-select-show-arrow.ant-select-show-search div {
-  border: 1px solid #FFFFFF66 !important;
-  background: transparent !important;
-}
-
-.DateRangePickerInput  {
-  border: 1px solid #FFFFFF66 !important;
-  background: transparent !important;
-  color: #FFF !important;   
-  font-weight: bold !important;
-}
-
-.DateRangePickerInput > .DateInput > input::placeholder {
-  color: #FFF !important;
-}
-
-.DateRangePicker_picker,
-.DateRangePicker_picker * {
-  z-index: 9999999 !important;
-}
-
-
-
-.popup_handler > button.ant-btn.ant-btn-default {
-  border: 1px solid #FFFFFF66 !important;
-  background: transparent !important;
-  color: #FFF !important;
-}
-
-/* Reveal animations: minimal, accessible, GPU-friendly */
-.reveal-init {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 600ms ease, transform 600ms ease;
-  will-change: opacity, transform;
-}
-.reveal-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal-init {
-    transition: none;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+/* Image overlay utilities for hero */
+.image-overlay { position: relative; isolation: isolate; }
+.image-overlay::after {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.10) 40%, rgba(0,0,0,0.22) 100%),
+    linear-gradient(180deg, rgba(15,39,66,0.35), rgba(15,39,66,0.0) 40%, rgba(15,39,66,0.25) 100%);
+  mix-blend-mode: multiply;
 }
