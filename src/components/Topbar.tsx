@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 function NavItem({ href, children }: { href: string; children: React.ReactNode }) {
   const pathname = usePathname();
   const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
-  const base = "h-full text-white transition-all font-normal hover:opacity-80 hover:border-b-4 hover:border-b-white/20";
-  const active = isActive ? "border-b-4 border-b-white/20 text-white" : "";
+  const base = "h-full text-[var(--brand-900)]/80 transition-all font-normal hover:opacity-90 hover:border-b-4 hover:border-b-[var(--brand-900)]/80";
+  const active = isActive ? "border-b-4 border-b-[var(--brand-900)] text-[var(--brand-900)] font-bold" : "";
   return (
     <Link href={href} aria-current={isActive ? "page" : undefined} className={`${base} ${active}`}>
       {children}
@@ -17,8 +17,8 @@ function NavItem({ href, children }: { href: string; children: React.ReactNode }
 
 export default function Topbar() {
   return (
-    <header className="w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="max-w-7xl mx-auto px-4 pt-2 h-36 items-start flex flex-col justify-center gap-4">
+    <header className="w-full bg-background backdrop-blur">
+      <div className="mx-auto w-10/12 px-0 pt-4 h-36 items-start flex flex-col justify-center gap-4">
         <div className="flex justify-between w-full">
           <div className="justify-self-center">
             <div className="flex items-center gap-2">
@@ -33,20 +33,20 @@ export default function Topbar() {
           <div className="justify-self-end flex items-center gap-2">
             <Link
               href="/login"
-              className="text-sm px-3 py-1.5 border border-white/60 w-28 text-center font-bold text-white"
+              className="text-sm px-3 py-1.5 border border-[var(--brand-900)]/60 w-28 text-center font-bold text-[var(--brand-900)]"
             >
               Sign Up
             </Link>
             <Link
               href="/login"
-              className="text-sm px-3 py-1.5 bg-white/10 w-28 text-center font-bold text-white"
+              className="text-sm px-3 py-1.5 border border-[var(--brand-900)]/60 w-28 text-center font-bold text-[var(--brand-900)]"
             >
               Sign In
             </Link>
           </div>
         </div>
 
-        <nav className="mt-1 hidden sm:flex items-center gap-8 text-sm text-white uppercase tracking-widest h-full pt-2">
+        <nav className="mt-1 hidden sm:flex items-center gap-8 text-sm text-[var(--brand-900)] uppercase tracking-widest h-full pt-2">
           <NavItem href="/">Home</NavItem>
           <NavItem href="/stays">Stays</NavItem>
           <NavItem href="/about">About Us</NavItem>

@@ -1,5 +1,5 @@
 ﻿"use client";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -78,7 +78,7 @@ const TOURS: Tour[] = [
       "https://blog.guruwalk.com/wp-content/uploads/2025/08/outdoor-cielo-cloudy-sunset-sunrise-structure-1024x683.webp",
     ],
     description:
-      "A guided sunset walk through the heart of Madrid that blends history, architecture, and local charm. Perfect for seeing the city in a different light — calm, romantic, and full of energy as night falls.",
+      "A guided sunset walk through the heart of Madrid that blends history, architecture, and local charm. Perfect for seeing the city in a different light.",
     itinerary: [
       "Departure from Plaza de Isabel II (Metro Ópera) just as the sun begins to set.",
       "Visit the exterior of the Royal Palace of Madrid and Sabatini Gardens bathed in golden light.",
@@ -96,34 +96,34 @@ export default function ToursSection() {
   const tours = TOURS;
   const loop = [...tours, ...tours];
   return (
-    <section className="max-w-7xl mx-auto px-4 pt-4 pb-16">
-      <h2 className="font-sans text-4xl font-bold text-left mb-8 text-gray-800">Discover Madrid</h2>
+    <section className="w-10/12 mx-auto px-4 pt-4 pb-16">
       <div className="relative">
         <div className="scrollbar-hide overflow-x-hidden">
-          <div className="infinite-scroll flex gap-6 w-[200%]">
+          <div className="infinite-scroll flex gap-8 w-[200%] p-4">
             {loop.map((tour, index) => (
               <Link
                 key={`${slugify(tour.title)}-${index}`}
                 href={`/tours/${encodeURIComponent(slugify(tour.title))}`}
-                className="group block w-[82vw] sm:w-[420px] md:w-[520px] shrink-0 first:ml-6 last:mr-6"
+                className="group block w-[82vw] sm:w-[320px] md:w-[400px] shrink-0 first:ml-6 last:mr-6"
               >
-                <article className="rounded-2xl overflow-hidden bg-white backdrop-blur ring-1 ring-black/5 transition-transform duration-500 ease-out group-hover:-translate-y-1">
-                  <div className="relative h-60 sm:h-64 md:h-72 overflow-hidden">
+                <article className="bg-white ring-1 ring-black/10 transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                  <header className="px-6 pt-6 pb-3 text-center h-[76px]">
+                    <h3 className="text-[0.85rem] tracking-[0.28em] text-[var(--primary)] font-semibold uppercase">{tour.title}</h3>
+                  </header>
+                  <div className="relative aspect-[16/10]overflow-hidden">
                     <Image
                       src={tour.images[0]}
                       alt={tour.title}
                       fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      className="object-cover"
                       sizes="(max-width: 768px) 82vw, 520px"
                       priority={index === 0}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
                   </div>
-                  <div className="p-5 sm:p-6">
-                    <h3 className="text-xl sm:text-2xl font-semibold text-[var(--primary)] tracking-tight">{tour.title}</h3>
-                    <p className="mt-2 text-sm sm:text-base text-gray-700 line-clamp-2">{tour.description}</p>
-                    <div className="mt-4 inline-flex items-center text-[var(--accent)] font-medium">
-                      Explore tour <span className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                  <div className="px-8 py-6 text-center">
+                    <p className="text-[15px] leading-7 text-gray-800 font-accent">{tour.description}</p>
+                    <div className="mt-8">
+                      <span className="inline-block px-6 py-3 bg-black text-white text-[12px] tracking-[0.22em] uppercase">VER MAIS</span>
                     </div>
                   </div>
                 </article>

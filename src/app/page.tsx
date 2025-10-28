@@ -103,7 +103,7 @@ export default function Home() {
         <section className="relative min-h-[88svh] isolate">
           <div
             ref={heroRef}
-            className="absolute inset-0 -z-10 will-change-transform overflow-hidden"
+            className="absolute inset-0 -z-10 will-change-transform overflow-hidden mx-auto w-10/12"
           >
             {/* Auto-fading background slideshow */}
             {slides.map((src, idx) => (
@@ -125,13 +125,13 @@ export default function Home() {
             <div className="absolute inset-0 " />
           </div>
           <div className="mx-auto max-w-6xl px-4 py-8 sm:py-28 lg:py-16">
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center mt-8 mb-24">
               <div className="text-center">
                 <Image
                   src="/logo-skykey.png"
                   alt="Skykey logo"
-                  width={260}
-                  height={260}
+                  width={96}
+                  height={96}
                 />
               </div>
             </div>
@@ -154,8 +154,8 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="w-full reveal-in mt-32 text-center">
-              <h1 className="font-accent text-xl sm:text-xl leading-[1.05] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)]">
+            <div className="w-full reveal-in mt-56 text-center">
+              <h1 className="font-accent text-2xl leading-[1.05] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] italic">
                 Feel at home, anywhere
               </h1>
             </div>
@@ -163,8 +163,8 @@ export default function Home() {
         </section>
 
         {/* Tours */}
-        <section id="reservations" className="mx-auto max-w-6xl px-4 py-16">
-          <div className="mb-8 reveal-init" data-animate>
+        <section id="reservations" className="w-full px-0 py-16">
+          <div className="mx-auto w-10/12 mb-8 reveal-init" data-animate>
             <p className="text-[var(--accent)] text-xs tracking-[0.18em] uppercase">
               Tours
             </p>
