@@ -133,7 +133,7 @@ export default function Home() {
             </div>
             <div className="w-full reveal-in mt-32 text-center">
               <h1 className="font-accent text-xl sm:text-xl leading-[1.05] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)]">
-                Feel at home, anywhere � Skykey
+                Feel at home, anywhere
               </h1>
             </div>
           </div>
