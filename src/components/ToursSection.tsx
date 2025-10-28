@@ -359,17 +359,16 @@ function HorizontalCarousel({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="relative">
-      <div ref={scrollerRef} className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 pr-2" style={{ scrollSnapType: "x mandatory" }}>
+      <div ref={scrollerRef} className="scrollbar-thin flex gap-6 overflow-x-auto snap-x snap-mandatory pb-3 pr-3" style={{ scrollSnapType: "x mandatory" }}>
         {React.Children.map(children, (child, idx) => (
-          <div key={idx} className="snap-start first:ml-1 last:mr-4">{child}</div>
+          <div key={idx} className="snap-start first:ml-6 last:mr-6">{child}</div>
         ))}
       </div>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent" />
-      <button aria-label="Scroll left" onClick={() => scrollBy(-400)} className={`group absolute left-2 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-white/80 backdrop-blur ring-1 ring-black/10 shadow-sm transition-all hover:bg-white ${canScroll.left ? "opacity-100" : "opacity-0"}`}> 
+      {/* Removed side white gradients */}
+      <button aria-label="Scroll left" onClick={() => scrollBy(-400)} className={`group absolute left-3 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-white/80 backdrop-blur ring-1 ring-black/10 shadow-sm transition-all hover:bg-white ${canScroll.left ? "opacity-100" : "opacity-0"}`}> 
         <span className="translate-x-[-1px]">←</span>
       </button>
-      <button aria-label="Scroll right" onClick={() => scrollBy(400)} className={`group absolute right-2 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-white/80 backdrop-blur ring-1 ring-black/10 shadow-sm transition-all hover:bg-white ${canScroll.right ? "opacity-100" : "opacity-0"}`}> 
+      <button aria-label="Scroll right" onClick={() => scrollBy(400)} className={`group absolute right-3 top-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-white/80 backdrop-blur ring-1 ring-black/10 shadow-sm transition-all hover:bg-white ${canScroll.right ? "opacity-100" : "opacity-0"}`}> 
         <span className="translate-x-[1px]">→</span>
       </button>
     </div>
