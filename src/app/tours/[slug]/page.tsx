@@ -119,8 +119,8 @@ export default function TourPage({ params }: { params: { slug: string } }) {
       <section className="relative h-[42svh] min-h-[340px]">
         <Image src={tour.images[0]} alt={tour.title} fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
-        <div className="absolute bottom-6 left-6 right-6 text-white drop-shadow">
-          <h1 className="text-3xl sm:text-4xl font-semibold">{tour.title}</h1>
+        <div className="absolute bottom-6 left-6 right-6 text-white drop-shadow mr-16">
+          <h1 className="text-3xl sm:text-4xl font-normal font-accent italic">{tour.title}</h1>
         </div>
       </section>
 

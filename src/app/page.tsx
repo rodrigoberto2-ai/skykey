@@ -165,10 +165,10 @@ export default function Home() {
         {/* Tours */}
         <section id="reservations" className="w-full px-0 py-16">
           <div className="mx-auto w-10/12 mb-8 reveal-init" data-animate>
-            <p className="text-[var(--accent)] text-xs tracking-[0.18em] uppercase">
+            <p className="text-[var(--accent)] font-accent text-xs tracking-[0.18em] uppercase">
               Tours
             </p>
-            <h2 className="mt-1 text-3xl sm:text-4xl font-semibold text-[var(--primary)]">
+            <h2 className="mt-1 text-3xl sm:text-4xl font-accent italic font-semibold text-[var(--primary)]">
               The best ways to discover Madrid
             </h2>
           </div>
@@ -177,7 +177,7 @@ export default function Home() {
       </main>
       <footer
         id="contact"
-        className="border-t py-6 text-center text-sm text-muted-foreground"
+        className="border-t py-6 text-center text-sm h-24 bg-[var(--brand-900)] text-white! flex justify-center items-center font-accent font-regular italic"
       >
         {new Date().getFullYear()} Skykey
       </footer>

@@ -16,7 +16,7 @@ const TOURS: Tour[] = [
   {
     title: "Madrid Classics Tour (Half Day)",
     images: [
-      "https://www.patrimonionacional.es/sites/default/files/styles/full/public/2020-05/6-salon_del_trono_cabecera_.jpg",
+      "https://cms.getnomad.app/uploads/Untitled_c8f37e27c9.png",
       "https://nomadicniko.com/wp-content/uploads/2010/07/DSC_2720.jpg",
       "https://madridsecreto.co/wp-content/uploads/2022/11/27170118/Gran-Via-1024x683.jpg",
     ],
@@ -36,7 +36,7 @@ const TOURS: Tour[] = [
   {
     title: "Madrid Food & Tapas Experience",
     images: [
-      "https://sh-assets.holidu.com/imagecache/blog-photos/3728_Fill_670_0.JPG",
+      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/da/af/09/varios-ambientes-con.jpg",
       "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursosturisticos/compras/mercado_san_miguel_2.jpg",
       "https://madride.es/wp-content/uploads/2024/07/Spanish-paella.jpg",
     ],
@@ -54,7 +54,7 @@ const TOURS: Tour[] = [
   {
     title: "Madrid Panoramic Hop-On Hop-Off Bus",
     images: [
-      "https://staticsgrupojulia.blob.core.windows.net/statics/EXCURSION/2021/España/Fotografías%20-%20Pictures/TOURS%20DE%20MADRID/MADMHOHO-HOP%20ON%20HOP%20OFF/madrid-city-tour-bus.jpg",
+      "https://res.cloudinary.com/dtljonz0f/image/upload/c_auto,ar_3:1,w_1200,g_auto/f_auto/q_auto/v1/gc-v1/madrid/Madrid_Grand_Via_rwteay?_a=BAVAZGE70",
       "https://staticsgrupojulia.blob.core.windows.net/statics/EXCURSION/2021/España/Fotografías%20-%20Pictures/TOURS%20DE%20MADRID/MADMHOHO-HOP%20ON%20HOP%20OFF/160.JPG",
       "https://cdn-imgix.headout.com/media/images/532a90deedb4a7452343bc8cb510a1b1-32573-madrid-city-sightseeing--madrid-panoramic-bus-tour-01.jpg?ar=16:10&auto=format&crop=faces,center&fit=crop&h=562.5&q=90&w=900",
     ],
@@ -73,7 +73,7 @@ const TOURS: Tour[] = [
   {
     title: "Sunset Tour — Madrid & Literary Quarter",
     images: [
-      "https://blog.flatsweethome.com/wp-content/uploads/2019/01/Los-Atardeceres-de-Madrid-que-Cambiarán-tu-Vida-Callao.jpg",
+      "https://www.theprincipalmadridhotel.com/content/imgsxml/blog/big156-madridsunset355.jpg",
       "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursos/palacio_real_1.jpg",
       "https://blog.guruwalk.com/wp-content/uploads/2025/08/outdoor-cielo-cloudy-sunset-sunrise-structure-1024x683.webp",
     ],
@@ -110,7 +110,7 @@ export default function ToursSection() {
                   <header className="px-6 pt-6 pb-3 text-center h-[76px]">
                     <h3 className="text-[0.85rem] tracking-[0.28em] text-[var(--primary)] font-semibold uppercase">{tour.title}</h3>
                   </header>
-                  <div className="relative aspect-[16/10]overflow-hidden">
+                  <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
                       src={tour.images[0]}
                       alt={tour.title}
