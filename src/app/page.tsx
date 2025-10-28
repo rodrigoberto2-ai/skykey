@@ -118,9 +118,11 @@ export default function Home() {
                 }`}
               />
             ))}
+            {/* Brand overlay (bottom -> top), sits under foreground content */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1e61a299] via-[#1e61a266]/35 to-transparent" />
             {/* Overlays for contrast and brand tone */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/12 via-transparent to-transparent" />
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent" /> */}
+            {/* <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/12 via-transparent to-transparent" /> */}
             {/* Subtle primary?accent sweep */}
             <div className="absolute inset-0 " />
           </div>
