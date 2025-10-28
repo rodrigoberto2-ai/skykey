@@ -9,6 +9,14 @@ export default function Home() {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
   const heroRef = useRef<HTMLDivElement | null>(null);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const slides = [
+    "/imgs/quartos/1.jpg",
+    "/imgs/quartos/2.jpg",
+    "/imgs/quartos/3.jpg",
+    "/imgs/quartos/4.jpg",
+    "/imgs/quartos/5.jpg",
+  ];
 
   useEffect(() => {
     const supabase = createClient();
@@ -68,6 +76,15 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Auto-fade slider
+  useEffect(() => {
+    if (!slides.length) return;
+    const id = setInterval(() => {
+      setSlideIndex((i) => (i + 1) % slides.length);
+    }, 7000); // 7s per slide for smoother pacing
+    return () => clearInterval(id);
+  }, [slides.length]);
+
   if (!checked) {
     return (
       <div className="min-h-[100svh] grid place-items-center">
@@ -86,15 +103,21 @@ export default function Home() {
         <section className="relative min-h-[88svh] isolate">
           <div
             ref={heroRef}
-            className="absolute inset-0 -z-10 will-change-transform"
+            className="absolute inset-0 -z-10 will-change-transform overflow-hidden"
           >
-            <Image
-              src="/hero.jpg"
-              alt="Skykey hero"
-              fill
-              className="object-cover object-bottom"
-              priority
-            />
+            {/* Auto-fading background slideshow */}
+            {slides.map((src, idx) => (
+              <Image
+                key={src}
+                src={src}
+                alt="Skykey hero slide"
+                fill
+                priority={idx === 0}
+                className={`object-cover object-bottom transition-opacity duration-[2000ms] ease-in-out ${
+                  idx === slideIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
             {/* Overlays for contrast and brand tone */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/12 via-transparent to-transparent" />
