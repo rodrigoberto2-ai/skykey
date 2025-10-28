@@ -94,7 +94,7 @@ function slugify(s: string) {
   return s
     .toLowerCase()
     .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
@@ -163,4 +163,3 @@ export default function TourPage({ params }: { params: { slug: string } }) {
     </article>
   );
 }
-
