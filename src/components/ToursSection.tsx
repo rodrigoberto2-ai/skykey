@@ -1,4 +1,4 @@
-﻿ï»¿"use client";
+﻿"use client";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default function ToursSection() {
         "Ideal for first-time visitors. A relaxed 3-4 hour walk blending history, architecture, and culture to get a great overview of Madrid and its most iconic sights.",
       itinerary: [
         "Meeting point: Puerta del Sol, the heart of Madrid.",
-        "Walk along Gran VÃ­a the city's most famous avenue with shops and historic buildings.",
+        "Walk along Gran VÃƒÂ­a the city's most famous avenue with shops and historic buildings.",
         "Visit the Royal Palace and Sabatini Gardens.",
         "Stop at El Retiro Park stroll by the lake or the Crystal Palace.",
         "Finish in Barrio de las Letras with a tapa and a glass of Spanish wine.",
@@ -42,7 +42,7 @@ export default function ToursSection() {
         "https://madride.es/wp-content/uploads/2024/07/Spanish-paella.jpg",
       ],
       description:
-        "Discover Madrid through its flavors. This tour blends history, local cuisine, and the unique atmosphere of traditional tapas bars â€” perfect for food lovers.",
+        "Discover Madrid through its flavors. This tour blends history, local cuisine, and the unique atmosphere of traditional tapas bars Ã¢â‚¬â€ perfect for food lovers.",
       itinerary: [
         "Start at Mercado de San Miguel to sample gourmet bites.",
         "Stroll through La Latina or Barrio de las Letras with stops for Iberian ham, patatas bravas, and homemade croquettes.",
@@ -55,40 +55,40 @@ export default function ToursSection() {
     {
       title: "Madrid Panoramic Hop-On Hop-Off Bus",
       images: [
-        "https://staticsgrupojulia.blob.core.windows.net/statics/EXCURSION/2021/EspaÃ±a/FotografÃ­as%20-%20Pictures/TOURS%20DE%20MADRID/MADMHOHO-HOP%20ON%20HOP%20OFF/madrid-city-tour-bus.jpg",
-        "https://staticsgrupojulia.blob.core.windows.net/statics/EXCURSION/2021/EspaÃ±a/FotografÃ­as%20-%20Pictures/TOURS%20DE%20MADRID/MADMHOHO-HOP%20ON%20HOP%20OFF/160.JPG",
+        "https://staticsgrupojulia.blob.core.windows.net/statics/EXCURSION/2021/EspaÃƒÂ±a/FotografÃƒÂ­as%20-%20Pictures/TOURS%20DE%20MADRID/MADMHOHO-HOP%20ON%20HOP%20OFF/madrid-city-tour-bus.jpg",
+        "https://staticsgrupojulia.blob.core.windows.net/statics/EXCURSION/2021/EspaÃƒÂ±a/FotografÃƒÂ­as%20-%20Pictures/TOURS%20DE%20MADRID/MADMHOHO-HOP%20ON%20HOP%20OFF/160.JPG",
         "https://cdn-imgix.headout.com/media/images/532a90deedb4a7452343bc8cb510a1b1-32573-madrid-city-sightseeing--madrid-panoramic-bus-tour-01.jpg?ar=16%3A10&auto=format&crop=faces%2Ccenter&fit=crop&h=562.5&q=90&w=900",
       ],
       description:
-        "Perfect for exploring Madrid at your own pace. The double-decker bus lets you hop on and off at major attractions â€” the most flexible way to see the whole city.",
+        "Perfect for exploring Madrid at your own pace. The double-decker bus lets you hop on and off at major attractions Ã¢â‚¬â€ the most flexible way to see the whole city.",
       itinerary: [
         "Departures from Plaza de Cibeles or Neptuno with two main routes:",
-        "Historic route: Puerta de AlcalÃ¡, Prado Museum, Royal Palace, Temple of Debod.",
-        "Modern route: Santiago BernabÃ©u Stadium, AZCA, Cuatro Torres, North Madrid.",
+        "Historic route: Puerta de AlcalÃƒÂ¡, Prado Museum, Royal Palace, Temple of Debod.",
+        "Modern route: Santiago BernabÃƒÂ©u Stadium, AZCA, Cuatro Torres, North Madrid.",
         "Hop on and off as many times as you like for 24h.",
       ],
       price:
-        "1-day ticket: â‚¬28 adults / â‚¬15 children. 2-day ticket from â‚¬35. Includes audio guide in Spanish, English, and Portuguese.",
+        "1-day ticket: Ã¢â€šÂ¬28 adults / Ã¢â€šÂ¬15 children. 2-day ticket from Ã¢â€šÂ¬35. Includes audio guide in Spanish, English, and Portuguese.",
       tips: "Sit on the upper deck for the best views; bring sunscreen or a light jacket depending on the season; check the last bus times; pair stops with museums or parks.",
     },
     {
-      title: "Sunset Tour â€” Madrid & Literary Quarter",
+      title: "Sunset Tour Ã¢â‚¬â€ Madrid & Literary Quarter",
       images: [
-        "https://blog.flatsweethome.com/wp-content/uploads/2019/01/Los-Atardeceres-de-Madrid-que-CambiarÃ¡n-tu-Vida-Callao.jpg",
+        "https://blog.flatsweethome.com/wp-content/uploads/2019/01/Los-Atardeceres-de-Madrid-que-CambiarÃƒÂ¡n-tu-Vida-Callao.jpg",
         "https://www.esmadrid.com/sites/default/files/styles/content_type_full/public/recursos/palacio_real_1.jpg",
         "https://blog.guruwalk.com/wp-content/uploads/2025/08/outdoor-cielo-cloudy-sunset-sunrise-structure-1024x683.webp",
       ],
       description:
-        "A guided sunset walk through the heart of Madrid that blends history, architecture, and local charm. Perfect for seeing the city in a different light â€” calm, romantic, and full of energy as night falls.",
+        "A guided sunset walk through the heart of Madrid that blends history, architecture, and local charm. Perfect for seeing the city in a different light Ã¢â‚¬â€ calm, romantic, and full of energy as night falls.",
       itinerary: [
-        "Departure from Plaza de Isabel II (Metro Ã“pera) just as the sun begins to set.",
+        "Departure from Plaza de Isabel II (Metro Ãƒâ€œpera) just as the sun begins to set.",
         "Visit the exterior of the Royal Palace of Madrid and Sabatini Gardens bathed in golden light.",
-        "Walk along Gran VÃ­a to admire early 20th-century theaters, faÃ§ades, and the evening lights of the city.",
-        "Explore the Literary Quarter (Barrio de las Letras), discovering historic cafÃ©s, small squares, and bohemian atmosphere.",
+        "Walk along Gran VÃƒÂ­a to admire early 20th-century theaters, faÃƒÂ§ades, and the evening lights of the city.",
+        "Explore the Literary Quarter (Barrio de las Letras), discovering historic cafÃƒÂ©s, small squares, and bohemian atmosphere.",
         "Finish the evening at a rooftop or terrace bar to enjoy a glass of wine or beer while watching Madrid light up.",
       ],
       price:
-        "Approximately â‚¬32 per person (small group, 2â€“3 hours). Check availability and inclusions (drink, guide, or transfers) when booking.",
+        "Approximately Ã¢â€šÂ¬32 per person (small group, 2Ã¢â‚¬â€œ3 hours). Check availability and inclusions (drink, guide, or transfers) when booking.",
       tips: "Wear comfortable shoes and bring a light jacket for the evening. Take your camera to capture the golden hour. Book in advance, as sunset tours are very popular.",
     },
   ];
