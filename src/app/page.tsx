@@ -119,7 +119,8 @@ export default function Home() {
               />
             ))}
             {/* Brand overlay (bottom -> top), sits under foreground content */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1e61a299] via-[#1e61a266]/35 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1e61a266] via-[#1e61a246]/35 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#ae99c896] via-[#ae99c846]/35 to-transparent" />
             {/* Overlays for contrast and brand tone */}
             {/* <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent" /> */}
             {/* <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/12 via-transparent to-transparent" /> */}
@@ -132,8 +133,8 @@ export default function Home() {
                 <Image
                   src="/logo-skykey.png"
                   alt="Skykey logo"
-                  width={96}
-                  height={96}
+                  width={124}
+                  height={124}
                 />
               </div>
             </div>
@@ -156,7 +157,7 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="w-full reveal-in mt-56 text-center">
+            <div className="w-full reveal-in mt-32 text-center">
               <h1 className="font-accent text-2xl leading-[1.05] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] italic">
                 Feel at home, anywhere
               </h1>

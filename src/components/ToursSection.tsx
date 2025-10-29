@@ -123,7 +123,7 @@ export default function ToursSection() {
                   <div className="px-8 py-6 text-center">
                     <p className="text-[15px] leading-7 text-gray-800 font-accent">{tour.description}</p>
                     <div className="mt-8">
-                      <span className="inline-block px-6 py-3 bg-black text-white text-[12px] tracking-[0.22em] uppercase">VER MAIS</span>
+                      <span className="inline-block px-6 py-3 bg-[var(--brand-900)] text-white font-semibold text-[12px] tracking-[0.22em] uppercase">VER MAIS</span>
                     </div>
                   </div>
                 </article>
