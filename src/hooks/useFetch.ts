@@ -2,7 +2,7 @@
 import { useQuery, useMutation, useQueryClient, QueryKey } from "@tanstack/react-query";
 import { api } from "@/lib/apiClient";
 
-export function useGet<T = unknown>(key: QueryKey, url: string, enabled = true) {
+export function useGet<T = unknown>(key: ReadonlyArray<unknown>, url: string, enabled = true) {
   return useQuery<T>({
     queryKey: key,
     queryFn: async () => {
@@ -13,7 +13,7 @@ export function useGet<T = unknown>(key: QueryKey, url: string, enabled = true) 
   });
 }
 
-export function usePost<TResp = unknown, TBody = unknown>(invalidateKeys: QueryKey[] = []) {
+export function usePost<TResp = unknown, TBody = unknown>(invalidateKeys: ReadonlyArray<ReadonlyArray<unknown>> = []) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ url, body }: { url: string; body: TBody }) => {
@@ -26,7 +26,7 @@ export function usePost<TResp = unknown, TBody = unknown>(invalidateKeys: QueryK
   });
 }
 
-export function usePatch<TResp = unknown, TBody = unknown>(invalidateKeys: QueryKey[] = []) {
+export function usePatch<TResp = unknown, TBody = unknown>(invalidateKeys: ReadonlyArray<ReadonlyArray<unknown>> = []) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ url, body }: { url: string; body: TBody }) => {
@@ -39,7 +39,7 @@ export function usePatch<TResp = unknown, TBody = unknown>(invalidateKeys: Query
   });
 }
 
-export function useDelete<TResp = unknown>(invalidateKeys: QueryKey[] = []) {
+export function useDelete<TResp = unknown>(invalidateKeys: ReadonlyArray<ReadonlyArray<unknown>> = []) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ url }: { url: string }) => {

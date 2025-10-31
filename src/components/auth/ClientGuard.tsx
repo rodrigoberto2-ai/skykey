@@ -26,7 +26,9 @@ export default function ClientGuard({ children }: { children: React.ReactNode })
       }
       if (data.session?.user) {
         const u = data.session.user;
-        setUser({ id: u.id, email: u.email ?? null, name: (u.user_metadata as any)?.full_name ?? null });
+        const meta = u.user_metadata as Record<string, unknown> | null | undefined;
+        const fullName = typeof meta?.full_name === "string" ? meta!.full_name : null;
+        setUser({ id: u.id, email: u.email ?? null, name: fullName });
       }
       setChecking(false);
     }
@@ -41,7 +43,9 @@ export default function ClientGuard({ children }: { children: React.ReactNode })
       if (!hasSession) clear();
       if (session?.user) {
         const u = session.user;
-        setUser({ id: u.id, email: u.email ?? null, name: (u.user_metadata as any)?.full_name ?? null });
+        const meta = u.user_metadata as Record<string, unknown> | null | undefined;
+        const fullName = typeof meta?.full_name === "string" ? meta!.full_name : null;
+        setUser({ id: u.id, email: u.email ?? null, name: fullName });
       }
     });
 

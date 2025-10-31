@@ -37,10 +37,12 @@ export default function PropriedadeEditModal({ open, onOpenChange, item, onSaved
     }
   }, [item]);
 
-  async function authHeader() {
+  async function authHeader(): Promise<Headers> {
     const { data } = await supabase.auth.getSession();
     const token = data.session?.access_token;
-    return token ? { Authorization: `Bearer ${token}` } : {};
+    const h = new Headers();
+    if (token) h.set("Authorization", `Bearer ${token}`);
+    return h;
   }
 
   async function onSubmit(e: React.FormEvent) {

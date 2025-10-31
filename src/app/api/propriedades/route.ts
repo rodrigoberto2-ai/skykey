@@ -69,7 +69,7 @@ export async function PATCH(req: NextRequest) {
   const id = String(body?.id || "");
   if (!id) return Response.json({ error: "Campo 'id' é obrigatório." }, { status: 400 });
 
-  const fields: Record<string, any> = {};
+  const fields: Record<string, unknown> = {};
   if (typeof body?.nome === "string") fields.nome = body.nome.trim();
   if (typeof body?.endereco !== "undefined") fields.endereco = body.endereco === null ? null : String(body.endereco).trim();
   if (typeof body?.descricao !== "undefined") fields.descricao = body.descricao === null ? null : String(body.descricao).trim();

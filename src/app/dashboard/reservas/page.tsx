@@ -31,7 +31,7 @@ export default function ReservasPage() {
     ["reservas", status, propFilter],
     `/api/reservas?${new URLSearchParams({ ...(status ? { status } : {}), ...(propFilter ? { propriedade_id: propFilter } : {}) }).toString()}`
   );
-  const del = useDelete(["reservas"]);
+  const del = useDelete([["reservas"]]);
   const [editOpen, setEditOpen] = useState(false);
   const [selected, setSelected] = useState<ReservaWithPropriedade | null>(null);
   const [busy, setBusy] = useState(false);
@@ -46,16 +46,7 @@ export default function ReservasPage() {
 
   const load = useCallback(async () => { await refetch(); }, [refetch]);
 
-  useEffect(() => {
-    void (async () => {
-      try {
-        const headers = await authHeader();
-        const res = await fetch("/api/propriedades", { headers });
-        const json = await res.json();
-        if (res.ok) setPropsList(json);
-      } catch {}
-    })();
-  }, [authHeader]);
+  // Props list already loaded via useGet above
 
   useEffect(() => {
     void load();
@@ -72,7 +63,7 @@ export default function ReservasPage() {
         <div className="flex gap-3 items-end flex-wrap">
         <div className="grid gap-1">
           <Label htmlFor="status">Status</Label>
-          <select id="status" className="h-9 rounded-md border bg-background px-2 text-sm" value={status} onChange={(e) => setStatus(e.target.value as any)}>
+          <select id="status" className="h-9 rounded-md border bg-background px-2 text-sm" value={status} onChange={(e) => setStatus(e.target.value as ReservaStatus | "") }>
             <option value="">Todos</option>
             <option value="pendente">Pendente</option>
             <option value="confirmada">Confirmada</option>
@@ -174,4 +165,5 @@ export default function ReservasPage() {
     </div>
   );
 }
+
 

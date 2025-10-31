@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     console.log("CONTACT_FORM", { nombre, email, telefono, asunto, mensaje, consent });
 
     return NextResponse.json({ ok: true });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ ok: false, error: "Solicitud inválida" }, { status: 400 });
   }
 }

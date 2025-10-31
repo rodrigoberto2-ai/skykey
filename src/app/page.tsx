@@ -32,7 +32,7 @@ export default function Home() {
     script.src = "https://bookonline.pro/widgets/search/dist/index.js";
     script.defer = true;
     document.body.appendChild(script);
-    return () => document.body.removeChild(script);
+    return () => { document.body.removeChild(script); };
   }, []);
 
   // Reveal-on-scroll animations (no deps)
@@ -100,7 +100,7 @@ export default function Home() {
     <div className="min-h-[100svh] flex flex-col">
       <main className="flex-1">
         {/* Luxury hero with glass search panel */}
-        <section className="relative min-h-[88svh] isolate">
+        <section className="relative h-[64svh] isolate">
           <div
             ref={heroRef}
             className="absolute inset-0 -z-10 will-change-transform overflow-hidden mx-auto w-10/12"
@@ -119,28 +119,28 @@ export default function Home() {
               />
             ))}
             {/* Brand overlay (bottom -> top), sits under foreground content */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1e61a266] via-[#1e61a246]/35 to-transparent" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#ae99c896] via-[#ae99c846]/35 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#103357C9] via-[#103357C9]/35 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#ae99c866] via-[#ae99c866]/35 to-transparent" />
             {/* Overlays for contrast and brand tone */}
             {/* <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent" /> */}
             {/* <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/12 via-transparent to-transparent" /> */}
             {/* Subtle primary?accent sweep */}
             <div className="absolute inset-0 " />
           </div>
-          <div className="mx-auto max-w-6xl px-4 py-8 sm:py-28 lg:py-16">
-            <div className="flex flex-col justify-center items-center mt-8 mb-24">
+          <div className="mx-auto max-w-6xl px-4 py-4">
+            <div className="flex flex-col justify-center items-center mt-16 mb-24">
               <div className="text-center">
                 <Image
                   src="/logo-skykey.png"
                   alt="Skykey logo"
-                  width={124}
-                  height={124}
+                  width={96}
+                  height={96}
                 />
               </div>
             </div>
             {/* Glass widget panel */}
             <div className="mt-16 sm:mt-16 max-w-4xl mx-auto" data-animate>
-              <div className="card-glass p-4 sm:p-5 w-full">
+              <div className="w-full">
                 <div
                   className="avaibook-search-widget"
                   data-accommodations-filter="accommodations"
@@ -157,7 +157,7 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="w-full reveal-in mt-32 text-center">
+            <div className="w-full reveal-in mt-28 text-center">
               <h1 className="font-accent text-2xl leading-[1.05] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.25)] italic">
                 Feel at home, anywhere
               </h1>

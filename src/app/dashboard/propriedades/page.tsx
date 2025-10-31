@@ -1,9 +1,8 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabaseClient";
 import type { Propriedade, PropriedadeImagem } from "@/types/propriedade";
 import PropriedadeCreateModal from "@/components/propriedades/PropriedadeCreateModal";
 import PropriedadeEditModal from "@/components/propriedades/PropriedadeEditModal";
@@ -24,20 +23,11 @@ type PropriedadeWithImgs = Propriedade & {
 };
 
 export default function PropriedadesPage() {
-  const supabase = useMemo(() => createClient(), []);
   const { data: items = [], isLoading: loading, refetch } = useGet<PropriedadeWithImgs[]>(["propriedades"], "/api/propriedades");
   const [editOpen, setEditOpen] = useState(false);
   const [selected, setSelected] = useState<PropriedadeWithImgs | null>(null);
   const [busy, setBusy] = useState(false);
-  const del = useDelete(["propriedades"]);
-
-  const authHeader = useCallback(async (): Promise<Headers> => {
-    const h = new Headers();
-    const { data } = await supabase.auth.getSession();
-    const token = data.session?.access_token;
-    if (token) h.set("Authorization", `Bearer ${token}`);
-    return h;
-  }, [supabase.auth]);
+  const del = useDelete([ ["propriedades"] ]);
 
   const load = useCallback(async () => {
     await refetch();

@@ -20,7 +20,9 @@ export function useAuth() {
       if (error) throw error;
       if (data.session?.user) {
         const u = data.session.user;
-        setUser({ id: u.id, email: u.email ?? null, name: (u.user_metadata as any)?.full_name ?? null });
+        const meta = u.user_metadata as Record<string, unknown> | null | undefined;
+        const fullName = typeof meta?.full_name === "string" ? meta!.full_name : null;
+        setUser({ id: u.id, email: u.email ?? null, name: fullName });
       }
       return { data, error: null as null };
     } catch (err) {
