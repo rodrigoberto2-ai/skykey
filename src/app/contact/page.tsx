@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import Image from "next/image";
 
 export default function ContactPage() {
   const [status, setStatus] = useState<
@@ -37,15 +38,51 @@ export default function ContactPage() {
     }
   }
 
+    const slides = [
+    "/imgs/quartos/1.jpg",
+    "/imgs/quartos/2.jpg",
+    "/imgs/quartos/3.jpg",
+    "/imgs/quartos/4.jpg",
+    "/imgs/quartos/5.jpg",
+  ];
+
+    const [slideIndex, setSlideIndex] = useState(0);
+  
+    useEffect(() => {
+      if (!slides.length) return;
+      const id = setInterval(() => {
+        setSlideIndex((i) => (i + 1) % slides.length);
+      }, 7000); // 7s per slide for smoother pacing
+      return () => clearInterval(id);
+    }, [slides.length]);
+
   return (
     <div className="min-h-[100svh]">
       {/* Content */}
       <section className="mx-auto w-10/12 px-4 py-12">
-        <div className="mb-8">
+      <div className="absolute inset-0 h-80! -z-10 will-change-transform overflow-hidden w-full">
+              {/* Auto-fading background slideshow */}
+              {slides.map((src, idx) => (
+                <Image
+                  key={src}
+                  src={src}
+                  alt="Skykey hero slide"
+                  fill
+                  priority={idx === 0}
+                  className={`object-cover object-center transition-opacity duration-[2000ms] ease-in-out ${
+                    idx === slideIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              ))}
+      
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#10335799] via-[#10335799]/35 to-transparent" />
+            </div>
+        <div className="mt-16 mb-14">
+          <div className="mt-4 mb-12! max-w-2xl text-[var(--brand-900)] text-4xl font-accent">
+            <p className="italic text-semibold text-white">We’re here to help</p>
+          </div>
           <p className="mt-4 max-w-2xl text-[var(--brand-900)] text-4xl font-accent">
-            <span className="italic text-semibold">We’re here to help</span>
-            <br />
-            <span className="text-lg text-muted-foreground">reach out and our team will get back to you shortly.</span>
+            <span className="text-lg text-muted-foreground">Reach out and our team will get back to you shortly.</span>
           </p>
         </div>
         <div className="grid gap-10 lg:grid-cols-2">

@@ -1,7 +1,6 @@
 export default function StaysPage() {
   return (
     <div className="mx-auto w-10/12 py-12 h-screen">
-      <h1 className="font-accent text-3xl mb-6 text-primary">Stays</h1>
 
       <div className="h-full">
         <iframe
